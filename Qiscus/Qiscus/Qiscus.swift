@@ -55,8 +55,8 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     public var iCloudUpload = false
     public var cameraUpload = true
     public var galeryUpload = true
-    public var contactShare = true
-    public var locationShare = true
+    public var contactShare = false
+    public var locationShare = false
     
     var isPushed:Bool = false
     var reachability:QReachability?
