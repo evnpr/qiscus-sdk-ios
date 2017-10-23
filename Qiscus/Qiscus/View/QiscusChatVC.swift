@@ -331,7 +331,7 @@ open class QiscusChatVC: UIViewController{
         
         let sendImage = Qiscus.image(named: "send")?.withRenderingMode(.alwaysTemplate)
         let attachmentImage = Qiscus.image(named: "share_attachment")?.withRenderingMode(.alwaysTemplate)
-        let recordImage = Qiscus.image(named: "ar_record")?.withRenderingMode(.alwaysTemplate)
+        let recordImage = Qiscus.image(named: "send")?.withRenderingMode(.alwaysTemplate)
         let cancelRecordImage = Qiscus.image(named: "ar_cancel")?.withRenderingMode(.alwaysTemplate)
         
         self.sendButton.setImage(sendImage, for: .normal)
@@ -349,7 +349,7 @@ open class QiscusChatVC: UIViewController{
         self.bottomButton.isHidden = true
         
         sendButton.addTarget(self, action: #selector(QiscusChatVC.sendMessage), for: .touchUpInside)
-        recordButton.addTarget(self, action: #selector(QiscusChatVC.recordVoice), for: .touchUpInside)
+        recordButton.addTarget(self, action: #selector(QiscusChatVC.sendMessage), for: .touchUpInside)
         cancelRecordButton.addTarget(self, action: #selector(QiscusChatVC.cancelRecordVoice), for: .touchUpInside)
         
         
