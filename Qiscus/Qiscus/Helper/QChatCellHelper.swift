@@ -37,23 +37,23 @@ open class QChatCellHelper: NSObject {
                 balloonEdgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
                 if cellVPos != nil {
                     if cellVPos == .last {
-                        balloonImage = Qiscus.image(named:"text_balloon_last_l")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                        balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_r")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                     }else{
-                        balloonImage = Qiscus.image(named:"text_balloon_left")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                        balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_r")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                     }
                 }else{
-                    balloonImage = Qiscus.image(named:"text_balloon_left")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                    balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_r")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                 }
             }else{
                 balloonEdgeInset = UIEdgeInsetsMake(13, 13, 13, 28)
                 if cellVPos != nil {
                     if cellVPos == .last {
-                        balloonImage = Qiscus.image(named:"text_balloon_last_r")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                        balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_l")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                     }else{
-                        balloonImage = Qiscus.image(named:"text_balloon_right")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                        balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_l")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                     }
                 }else{
-                    balloonImage = Qiscus.image(named:"text_balloon_right")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+                    balloonImage = Qiscus.image(named:"ic_buble_message_halodoc_l")?.resizableImage(withCapInsets: balloonEdgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
                 }
             }
         }else{

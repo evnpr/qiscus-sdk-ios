@@ -32,10 +32,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yQe-QN-D5C">
-                                <rect key="frame" x="27" y="0.0" width="237" height="189"/>
+                                <rect key="frame" x="0.0" y="0.0" width="237" height="189"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQw-Hi-C8s" userLabel="ContainerView">
-                                <rect key="frame" x="45" y="3" width="216" height="183"/>
+                                <rect key="frame" x="10" y="3" width="216" height="183"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="This place for media caption" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="w8a-KL-uE0" customClass="QTextView" customModule="Qiscus" customModuleProvider="target">
                                         <rect key="frame" x="3" y="127" width="210" height="40"/>
@@ -126,7 +126,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending Failed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pk-jc-0cz">
-                                <rect key="frame" x="184" y="168" width="75" height="21"/>
+                                <rect key="frame" x="157" y="168" width="75" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="1qA-RF-p2d"/>
                                     <constraint firstAttribute="height" constant="21" id="crM-xw-OsK"/>
@@ -143,11 +143,11 @@
                             <constraint firstItem="RQw-Hi-C8s" firstAttribute="top" secondItem="yQe-QN-D5C" secondAttribute="top" constant="3" id="845-L6-nt6"/>
                             <constraint firstAttribute="height" secondItem="yQe-QN-D5C" secondAttribute="height" id="9Vp-xY-eQa"/>
                             <constraint firstItem="yQe-QN-D5C" firstAttribute="width" secondItem="RQw-Hi-C8s" secondAttribute="width" constant="21" id="9yK-Q6-VPA"/>
-                            <constraint firstItem="RQw-Hi-C8s" firstAttribute="leading" secondItem="yQe-QN-D5C" secondAttribute="leading" constant="18" id="L8B-3T-Ivx"/>
+                            <constraint firstItem="RQw-Hi-C8s" firstAttribute="leading" secondItem="yQe-QN-D5C" secondAttribute="leading" constant="10" id="L8B-3T-Ivx"/>
                             <constraint firstItem="3pk-jc-0cz" firstAttribute="trailing" secondItem="yQe-QN-D5C" secondAttribute="trailing" constant="-5" id="NWr-vu-Koy"/>
                             <constraint firstItem="yQe-QN-D5C" firstAttribute="top" secondItem="jZy-ur-EFQ" secondAttribute="top" id="RvK-OR-QF7"/>
                             <constraint firstItem="yQe-QN-D5C" firstAttribute="height" secondItem="RQw-Hi-C8s" secondAttribute="height" constant="6" id="Vcq-jK-f3S"/>
-                            <constraint firstItem="yQe-QN-D5C" firstAttribute="leading" secondItem="jZy-ur-EFQ" secondAttribute="leading" constant="27" id="dew-gf-Kpi"/>
+                            <constraint firstItem="yQe-QN-D5C" firstAttribute="leading" secondItem="jZy-ur-EFQ" secondAttribute="leading" id="dew-gf-Kpi"/>
                             <constraint firstItem="3pk-jc-0cz" firstAttribute="bottom" secondItem="yQe-QN-D5C" secondAttribute="bottom" id="kN8-l2-MDH"/>
                             <constraint firstItem="lZ3-8A-ben" firstAttribute="leading" secondItem="jZy-ur-EFQ" secondAttribute="leading" constant="60" id="lTr-7z-RSK"/>
                             <constraint firstItem="lZ3-8A-ben" firstAttribute="top" secondItem="jZy-ur-EFQ" secondAttribute="top" id="paQ-Fd-1gD"/>

@@ -151,18 +151,18 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
         switch self.comment!.cellPos {
         case .single, .last:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "text_balloon_last_r"
+                imageName = "ic_buble_message_halodoc_l"
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "text_balloon_last_l"
+                imageName = "ic_buble_message_halodoc_r"
             }
             break
         default:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "text_balloon_right"
+                imageName = "ic_buble_message_halodoc_l"
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "text_balloon_left"
+                imageName = "ic_buble_message_halodoc_r"
             }
             break
         }
