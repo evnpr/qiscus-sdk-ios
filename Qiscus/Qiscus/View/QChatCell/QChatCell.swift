@@ -151,10 +151,10 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
         switch self.comment!.cellPos {
         case .single, .last:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "ic_buble_message_halodoc_l"
+                balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "ic_buble_message_halodoc_r"
+                balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
 //                balloonImage = Qiscus.style.assets.rightBallonLast
 //            }else{
 //                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
@@ -163,10 +163,10 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
             break
         default:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "ic_buble_message_halodoc_l"
+		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "ic_buble_message_halodoc_r"
+		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
 //                balloonImage = Qiscus.style.assets.rightBallonNormal
 //            }else{
 //                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
