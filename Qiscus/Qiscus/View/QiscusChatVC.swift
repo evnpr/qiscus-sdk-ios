@@ -24,9 +24,9 @@ open class QiscusChatVC: UIViewController{
     @IBOutlet weak var inputBar: UIView!
     @IBOutlet public weak var backgroundView: UIImageView!
     @IBOutlet weak var inputText: ChatInputText!
-    @IBOutlet weak var welcomeView: UIView!
-    @IBOutlet weak var welcomeText: UILabel!
-    @IBOutlet weak var welcomeSubtitle: UILabel!
+    @IBOutlet public weak var welcomeView: UIView!
+    @IBOutlet public weak var welcomeText: UILabel!
+    @IBOutlet public weak var welcomeSubtitle: UILabel!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var attachButton: UIButton!
     @IBOutlet weak var archievedNotifView: UIView!
