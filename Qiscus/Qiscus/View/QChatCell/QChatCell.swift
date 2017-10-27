@@ -145,30 +145,37 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
     }
 
     public func getBallon()->UIImage?{
-        var imageName = ""
+        var balloonImage:UIImage? = nil
         var edgeInset = UIEdgeInsetsMake(13, 13, 13, 28)
         
         switch self.comment!.cellPos {
         case .single, .last:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "ic_buble_message_halodoc_l"
+                balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "ic_buble_message_halodoc_r"
+                balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
+//                balloonImage = Qiscus.style.assets.rightBallonLast
+//            }else{
+//                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
+//                balloonImage = Qiscus.style.assets.leftBallonLast
             }
             break
         default:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
-                imageName = "ic_buble_message_halodoc_l"
+		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
                 edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
-                imageName = "ic_buble_message_halodoc_r"
+		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
+//                balloonImage = Qiscus.style.assets.rightBallonNormal
+//            }else{
+//                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
+//                balloonImage = Qiscus.style.assets.leftBallonNormal
             }
             break
         }
-
         
-        return Qiscus.image(named:imageName)?.resizableImage(withCapInsets: edgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+        return balloonImage?.resizableImage(withCapInsets: edgeInset, resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
     }
     public func willDisplayCell(){
         
