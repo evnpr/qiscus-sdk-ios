@@ -33,7 +33,7 @@ class QiscusUploaderVC: UIViewController, UIScrollViewDelegate {
         self.scrollView.delegate = self
         self.scrollView.minimumZoomScale = 1.0
         self.scrollView.maximumZoomScale = 4.0
-        let sendImage = Qiscus.image(named: "send")?.withRenderingMode(.alwaysTemplate)
+        let sendImage = Qiscus.image(named: "ic_send")
         self.sendButton.setImage(sendImage, for: .normal)
         self.sendButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
         self.mediaCaption.chatInputDelegate = self

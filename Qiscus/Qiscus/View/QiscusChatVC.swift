@@ -304,8 +304,8 @@ open class QiscusChatVC: UIViewController{
         self.loadMoreControl.addTarget(self, action: #selector(QiscusChatVC.loadMore), for: UIControlEvents.valueChanged)
         self.collectionView.addSubview(self.loadMoreControl)
         
-        let lightColor = self.topColor.withAlphaComponent(0.4)
-        recordBackground.backgroundColor = lightColor
+       // let lightColor = self.topColor.withAlphaComponent(0.4)
+       // recordBackground.backgroundColor = lightColor
         recordBackground.layer.cornerRadius = 16
         bottomButton.setImage(Qiscus.image(named: "bottom")?.withRenderingMode(.alwaysTemplate), for: .normal)
         bottomButton.layer.cornerRadius = 17.5
@@ -329,9 +329,9 @@ open class QiscusChatVC: UIViewController{
         self.emptyChatImage.image = QiscusAssetsConfiguration.shared.emptyChat
         self.emptyChatImage.tintColor = self.bottomColor
         
-        let sendImage = Qiscus.image(named: "send")?.withRenderingMode(.alwaysTemplate)
-        let attachmentImage = Qiscus.image(named: "share_attachment")?.withRenderingMode(.alwaysTemplate)
-        let recordImage = Qiscus.image(named: "send")?.withRenderingMode(.alwaysTemplate)
+        let sendImage = Qiscus.image(named: "ic_send")
+        let attachmentImage = Qiscus.image(named: "ic_attachment")
+        let recordImage = Qiscus.image(named: "ic_send")
         let cancelRecordImage = Qiscus.image(named: "ar_cancel")?.withRenderingMode(.alwaysTemplate)
         
         self.sendButton.setImage(sendImage, for: .normal)
@@ -341,10 +341,10 @@ open class QiscusChatVC: UIViewController{
         
         self.cancelRecordButton.isHidden = true
         
-        self.sendButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
+        //self.sendButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
         self.attachButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
-        self.recordButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
-        self.cancelRecordButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
+        //self.recordButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
+        //self.cancelRecordButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
         self.bottomButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
         self.bottomButton.isHidden = true
         
