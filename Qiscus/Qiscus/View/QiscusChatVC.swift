@@ -304,8 +304,8 @@ open class QiscusChatVC: UIViewController{
         self.loadMoreControl.addTarget(self, action: #selector(QiscusChatVC.loadMore), for: UIControlEvents.valueChanged)
         self.collectionView.addSubview(self.loadMoreControl)
         
-       // let lightColor = self.topColor.withAlphaComponent(0.4)
-       // recordBackground.backgroundColor = lightColor
+        // let lightColor = self.topColor.withAlphaComponent(0.4)
+        // recordBackground.backgroundColor = lightColor
         recordBackground.layer.cornerRadius = 16
         bottomButton.setImage(Qiscus.image(named: "bottom")?.withRenderingMode(.alwaysTemplate), for: .normal)
         bottomButton.layer.cornerRadius = 17.5
@@ -384,14 +384,14 @@ open class QiscusChatVC: UIViewController{
         
         let titleWidth = QiscusHelper.screenWidth()
         
-        titleLabel = UILabel(frame:CGRect(x: 40, y: 7, width: titleWidth, height: 17))
+        titleLabel = UILabel(frame:CGRect(x: 40, y: 7, width: titleWidth/2, height: 17))
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textColor = self.tintColor
         titleLabel.font = UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
         titleLabel.text = self.chatTitle
         titleLabel.textAlignment = .left
         
-        subtitleLabel = UILabel(frame:CGRect(x: 40, y: 25, width: titleWidth, height: 13))
+        subtitleLabel = UILabel(frame:CGRect(x: 40, y: 25, width: titleWidth/2, height: 13))
         subtitleLabel.backgroundColor = UIColor.clear
         subtitleLabel.textColor = self.tintColor
         subtitleLabel.font = UIFont.systemFont(ofSize: 11)
@@ -416,7 +416,7 @@ open class QiscusChatVC: UIViewController{
         self.roomAvatar.clipsToBounds = true
         self.roomAvatar.backgroundColor = bgColor[0]
         
-        self.titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth + 40, height: 44))
+        self.titleView = UIView(frame: CGRect(x: 0, y: 0, width: (titleWidth + 40)/2, height: 44))
         self.titleView.addSubview(self.titleLabel)
         self.titleView.addSubview(self.subtitleLabel)
         self.titleView.addSubview(self.roomAvatar)
@@ -451,7 +451,7 @@ open class QiscusChatVC: UIViewController{
         }
         let shareMenuItem: UIMenuItem = UIMenuItem(title: "Share", action: #selector(QChatCell.share))
         menuItems.append(shareMenuItem)
-
+        
         UIMenuController.shared.menuItems = menuItems
         
         //self.navigationController?.navigationBar.verticalGradientColor(topColor, bottomColor: bottomColor)
@@ -503,7 +503,7 @@ open class QiscusChatVC: UIViewController{
         
         if self.defaultBack {
             let backButton = QiscusChatVC.backButton(self, action: #selector(QiscusChatVC.goBack))
-
+            
             self.navigationItem.setHidesBackButton(true, animated: false)
             self.navigationItem.leftBarButtonItems = [backButton]
         }
@@ -618,7 +618,7 @@ open class QiscusChatVC: UIViewController{
         self.titleView.addGestureRecognizer(tapRecognizer)
         
         let containerWidth = QiscusHelper.screenWidth() - 49
-        let titleWidth = QiscusHelper.screenWidth() - CGFloat(49 * totalButton) - 40
+        let titleWidth = QiscusHelper.screenWidth() - CGFloat(57 * 3) - 40
         
         self.titleLabel.frame = CGRect(x: 40, y: 7, width: titleWidth, height: 17)
         self.subtitleLabel.frame = CGRect(x: 40, y: 25, width: titleWidth, height: 13)
@@ -689,9 +689,9 @@ open class QiscusChatVC: UIViewController{
             //room.unsubscribeRealtimeStatus()
             room.delegate = nil
         }
-//        audioPlayer?.pause()
-//        stopTimer()
-//        updateAudioDisplay()
+        //        audioPlayer?.pause()
+        //        stopTimer()
+        //        updateAudioDisplay()
         if self.backAction != nil{
             self.backAction!()
         }else{
@@ -814,22 +814,22 @@ open class QiscusChatVC: UIViewController{
         }
     }
     open func postComment(comment : QComment) {
-//        let extraData : [String: Any] = [
-//            "key1":"value1",
-//            "key2":2,
-//            "key3":true,
-//            "key4": [
-//                "subKey 1": 1,
-//                "subKey 2": "value subkey2"
-//            ]
-//        ]
-//        comment.set(extras: extraData, onSuccess: { (comment) in
-//            self.chatRoom?.post(comment: comment)
-//        }) { (_, error) in
-//            comment.updateStatus(status: .failed)
-//            print(error)
-//        }
-
+        //        let extraData : [String: Any] = [
+        //            "key1":"value1",
+        //            "key2":2,
+        //            "key3":true,
+        //            "key4": [
+        //                "subKey 1": 1,
+        //                "subKey 2": "value subkey2"
+        //            ]
+        //        ]
+        //        comment.set(extras: extraData, onSuccess: { (comment) in
+        //            self.chatRoom?.post(comment: comment)
+        //        }) { (_, error) in
+        //            comment.updateStatus(status: .failed)
+        //            print(error)
+        //        }
+        
         chatRoom?.post(comment: comment)
     }
 }
@@ -916,13 +916,13 @@ extension QiscusChatVC:QRoomDelegate{
     }
     
     public func room(gotNewComment comment: QComment) {
-//        self.collectionView.reloadData()
-//        self.chatRoom!.updateUnreadCommentCount(count: 0)
-//        if let indexPath = self.chatRoom!.getIndexPath(ofComment: comment){
-//            if self.isLastRowVisible || comment.senderEmail == QiscusMe.sharedInstance.email{
-//                self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
-//            }
-//        }
+        //        self.collectionView.reloadData()
+        //        self.chatRoom!.updateUnreadCommentCount(count: 0)
+        //        if let indexPath = self.chatRoom!.getIndexPath(ofComment: comment){
+        //            if self.isLastRowVisible || comment.senderEmail == QiscusMe.sharedInstance.email{
+        //                self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+        //            }
+        //        }
     }
     
     public func room(userDidTyping userEmail: String) {
@@ -1095,7 +1095,7 @@ extension QiscusChatVC: CLLocationManagerDelegate {
                                 DispatchQueue.main.async { autoreleasepool{
                                     let comment = self.chatRoom!.newLocationComment(latitude: latitude, longitude: longitude, title: title, address: address)
                                     self.postComment(comment: comment)
-                                }}
+                                    }}
                             }
                         }
                     })
@@ -1104,6 +1104,7 @@ extension QiscusChatVC: CLLocationManagerDelegate {
                 self.didFindLocation = true
                 self.dismissLoading()
             }
-        }}
+            }}
     }
 }
+
