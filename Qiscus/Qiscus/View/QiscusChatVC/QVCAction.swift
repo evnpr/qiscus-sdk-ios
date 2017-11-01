@@ -543,7 +543,7 @@ extension QiscusChatVC {
     
     func uploadImage(){
         view.endEditing(true)
-        if Qiscus.sharedInstance.connected{
+        //if Qiscus.sharedInstance.connected{
             let photoPermissions = PHPhotoLibrary.authorizationStatus()
             
             if(photoPermissions == PHAuthorizationStatus.authorized){
@@ -565,13 +565,13 @@ extension QiscusChatVC {
             }else{
                 self.showPhotoAccessAlert()
             }
-        }else{
-            self.showNoConnectionToast()
-        }
+        //}else{
+            //self.showNoConnectionToast()
+        //}
     }
     func uploadFromCamera(){
         view.endEditing(true)
-        if Qiscus.sharedInstance.connected{
+        //if Qiscus.sharedInstance.connected{
             if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized
             {
                 DispatchQueue.main.async(execute: {
@@ -600,9 +600,9 @@ extension QiscusChatVC {
                     }
                 })
             }
-        }else{
-            self.showNoConnectionToast()
-        }
+//        }else{
+//            self.showNoConnectionToast()
+//        }
     }
     func recordVoice(){
         self.prepareRecording()
