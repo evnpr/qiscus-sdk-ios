@@ -16,21 +16,21 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="in_chat_avatar_border" translatesAutoresizingMaskIntoConstraints="NO" id="lxO-k2-gaH">
-                    <rect key="frame" x="13" y="0.0" width="0.0" height="32"/>
+                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="5PZ-4L-Dn0"/>
                         <constraint firstAttribute="width" id="GlL-hX-aVp"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eu6-06-2jB">
-                    <rect key="frame" x="13" y="-3" width="0.0" height="38"/>
+                    <rect key="frame" x="0.0" y="-3" width="0.0" height="38"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="Bjx-tL-RJe"/>
                         <constraint firstAttribute="width" id="ytT-61-GiR"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PlB-LE-T53">
-                    <rect key="frame" x="13" y="1" width="0.0" height="30"/>
+                    <rect key="frame" x="0.0" y="1" width="0.0" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Tww-QP-cdF"/>
                         <constraint firstAttribute="width" id="vDg-c8-BhC"/>
@@ -44,7 +44,7 @@
             <constraints>
                 <constraint firstItem="eu6-06-2jB" firstAttribute="centerX" secondItem="lxO-k2-gaH" secondAttribute="centerX" id="2rs-hb-QRg"/>
                 <constraint firstItem="eu6-06-2jB" firstAttribute="centerY" secondItem="lxO-k2-gaH" secondAttribute="centerY" id="8KI-6T-D04"/>
-                <constraint firstItem="lxO-k2-gaH" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="13" id="Esw-v0-Jnb"/>
+                <constraint firstItem="lxO-k2-gaH" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="Esw-v0-Jnb"/>
                 <constraint firstAttribute="top" secondItem="lxO-k2-gaH" secondAttribute="top" id="IIe-Rb-bF1"/>
                 <constraint firstItem="PlB-LE-T53" firstAttribute="centerX" secondItem="eu6-06-2jB" secondAttribute="centerX" id="ns1-eo-RBL"/>
                 <constraint firstItem="PlB-LE-T53" firstAttribute="centerY" secondItem="eu6-06-2jB" secondAttribute="centerY" id="wFi-Rz-tGv"/>

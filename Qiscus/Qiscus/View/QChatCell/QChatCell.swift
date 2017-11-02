@@ -146,14 +146,14 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
 
     public func getBallon()->UIImage?{
         var balloonImage:UIImage? = nil
-        var edgeInset = UIEdgeInsetsMake(13, 13, 13, 28)
+        var edgeInset = UIEdgeInsetsMake(13, 0, 13, 0)
         
         switch self.comment!.cellPos {
         case .single, .last:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
                 balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
-                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
+                //edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
                 balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
 //                balloonImage = Qiscus.style.assets.rightBallonLast
 //            }else{
@@ -165,7 +165,7 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
 		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_l")
             }else{
-                edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
+              //  edgeInset = UIEdgeInsetsMake(13, 28, 13, 13)
 		balloonImage = Qiscus.image(named: "ic_buble_message_halodoc_r")
 //                balloonImage = Qiscus.style.assets.rightBallonNormal
 //            }else{

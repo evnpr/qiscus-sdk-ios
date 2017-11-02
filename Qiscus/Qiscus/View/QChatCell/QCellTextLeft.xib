@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="309" height="50"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMs-48-McT">
-                                <rect key="frame" x="10" y="0.0" width="200" height="20"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="DOi-C0-cPK"/>
                                     <constraint firstAttribute="height" constant="20" id="yUD-b3-Jj9"/>
@@ -35,7 +35,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="221" height="50"/>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0db-y1-yFM">
-                                <rect key="frame" x="10" y="-65" width="192" height="65"/>
+                                <rect key="frame" x="0.0" y="-65" width="192" height="65"/>
                                 <subviews>
                                     <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WLP-sw-vSk" userLabel="background">
                                         <rect key="frame" x="0.0" y="-0.5" width="192" height="65"/>
@@ -107,7 +107,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Halooo ...." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mbY-dm-Inu" customClass="QTextView" customModule="Qiscus" customModuleProvider="target">
-                                <rect key="frame" x="10" y="0.0" width="190" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="190" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="A4E-zp-ojY"/>
                                     <constraint firstAttribute="width" constant="190" id="g6k-7I-yVn"/>
@@ -122,7 +122,7 @@
                         <constraints>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="top" secondItem="wLA-y9-TFo" secondAttribute="top" id="Afh-rP-y3Q"/>
                             <constraint firstItem="0db-y1-yFM" firstAttribute="leading" secondItem="mbY-dm-Inu" secondAttribute="leading" id="EvX-FA-RYI"/>
-                            <constraint firstItem="mbY-dm-Inu" firstAttribute="leading" secondItem="fMF-Uw-jWN" secondAttribute="leading" constant="10" id="JhE-xJ-LFV"/>
+                            <constraint firstItem="mbY-dm-Inu" firstAttribute="leading" secondItem="fMF-Uw-jWN" secondAttribute="leading" id="JhE-xJ-LFV"/>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="leading" secondItem="wLA-y9-TFo" secondAttribute="leading" id="T2q-hK-ErK"/>
                             <constraint firstItem="3DM-pr-Bgi" firstAttribute="bottom" secondItem="fMF-Uw-jWN" secondAttribute="bottom" id="URs-jU-GXQ"/>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="width" secondItem="mbY-dm-Inu" secondAttribute="width" constant="31" id="XgA-oA-0j1"/>

@@ -240,7 +240,7 @@ extension QiscusChatVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let commentGroup = self.chatRoom!.commentGroup(index: section)!
         if commentGroup.senderEmail != QiscusMe.sharedInstance.email{
-            return UIEdgeInsets(top: 0, left: 6, bottom: -44, right: 0)
+            return UIEdgeInsets(top: 0, left: 0, bottom: -44, right: 0)
         }else{
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
