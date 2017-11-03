@@ -208,20 +208,23 @@ public class QRoom:Object {
     }
     public class func room(withId id:String) -> QRoom? {
         if let cache = Qiscus.chatRooms[id] {
-            return cache
-        }else{
-            let realm = try! Realm(configuration: Qiscus.dbConfiguration)
-            let room = realm.object(ofType: QRoom.self, forPrimaryKey: id)
-            if room != nil {
-                room?.resetRoomComment()
-                Qiscus.chatRooms[room!.id] = room!
-                if Qiscus.shared.chatViews[room!.id] ==  nil{
-                    let chatView = QiscusChatVC()
-                    chatView.chatRoom = Qiscus.chatRooms[room!.id]
-                    Qiscus.shared.chatViews[room!.id] = chatView
-                }
-                return room
+            if !cache.isInvalidated {
+                return cache
+            }else{
+                Qiscus.chatRooms[id] == nil
             }
+        }
+        let realm = try! Realm(configuration: Qiscus.dbConfiguration)
+        let room = realm.object(ofType: QRoom.self, forPrimaryKey: id)
+        if room != nil {
+            room?.resetRoomComment()
+            Qiscus.chatRooms[room!.id] = room!
+            if Qiscus.shared.chatViews[room!.id] ==  nil{
+                let chatView = QiscusChatVC()
+                chatView.chatRoom = Qiscus.chatRooms[room!.id]
+                Qiscus.shared.chatViews[room!.id] = chatView
+            }
+            return room
         }
         return nil
     }
@@ -365,6 +368,11 @@ public class QRoom:Object {
                         newParticipant.email = participantEmail
                         newParticipant.lastReadCommentId = lastReadId
                         newParticipant.lastDeliveredCommentId = lastDeliveredId
+                        if let storedParticipant = realm.object(ofType: QParticipant.self, forPrimaryKey: "\(room.id)_\(participantEmail)"){
+                            try! realm.write {
+                                realm.delete(storedParticipant)
+                            }
+                        }
                         do {
                             try realm.write {
                                 room.participants.append(newParticipant)
@@ -734,7 +742,7 @@ public class QRoom:Object {
                 let savedUser = QUser.saveUser(withEmail: participantEmail, fullname: fullname, avatarURL: avatarURL)
                 let lastReadId = participantJSON["last_comment_read_id"].intValue
                 let lastDeliveredId = participantJSON["last_comment_received_id"].intValue
-                let savedParticipant = self.participants.filter("email == '\(savedUser.email)'")
+                let savedParticipant = self.participants.filter("email == '\(participantEmail)'")
                 if savedParticipant.count > 0{
                     let storedParticipant = savedParticipant.first!
                     storedParticipant.updateLastReadId(commentId: lastReadId)
@@ -747,6 +755,12 @@ public class QRoom:Object {
                     newParticipant.lastReadCommentId = lastReadId
                     newParticipant.lastDeliveredCommentId = lastDeliveredId
                     
+                    if let storedParticipant = realm.object(ofType: QParticipant.self, forPrimaryKey: "\(self.id)_\(participantEmail)"){
+                        try! realm.write {
+                            realm.delete(storedParticipant)
+                        }
+                    }
+                    
                     do {
                         try realm.write {
                             self.participants.append(newParticipant)
@@ -755,6 +769,7 @@ public class QRoom:Object {
                     catch let error as NSError {
                         Qiscus.printLog(text: "WARNING!! - \(error.localizedDescription)")
                     }
+                    
                     participantChanged = true
                 }
                 participantString.append(participantEmail)
