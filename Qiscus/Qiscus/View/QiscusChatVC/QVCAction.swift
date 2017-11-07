@@ -198,7 +198,8 @@ extension QiscusChatVC {
     func startTypingIndicator(withUser user:String){
         self.typingIndicatorUser = user
         self.isTypingOn = true
-        let typingText = "\(user) is typing ..."
+        //let typingText = "\(user) is typing ..."
+        let typingText = "Typing ..."
         self.subtitleLabel.text = typingText
         if self.remoteTypingTimer != nil {
             if self.remoteTypingTimer!.isValid {
