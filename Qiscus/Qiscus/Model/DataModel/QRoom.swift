@@ -474,6 +474,10 @@ public class QRoom:Object {
                         }
                     }}
                 }
+            }else{
+                if self.lastCommentId < newComment.id || self.lastCommentCreatedAt < newComment.createdAt {
+                    self.updateLastComentInfo(comment: newComment, triggerNotification: false)
+                }
             }
         }
         else if onTop{
