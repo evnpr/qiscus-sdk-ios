@@ -57,7 +57,7 @@ open class QiscusChatVC: UIViewController{
     var isPresence:Bool = false
     public var titleLabel = UILabel()
     public var subtitleLabel = UILabel()
-    var roomAvatarImage:UIImage?
+    public var roomAvatarImage:UIImage?
     public var roomAvatar = UIImageView()
     var roomAvatarLabel = UILabel()
     public var titleView = UIView()
