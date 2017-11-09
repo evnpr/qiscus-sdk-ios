@@ -60,7 +60,7 @@ public class QRoom:Object {
     private dynamic var lastCommentText:String = ""
     internal dynamic var lastCommentUniqueId: String = ""
     private dynamic var lastCommentBeforeId:Int = 0
-    private dynamic var lastCommentCreatedAt: Double = 0
+    public dynamic var lastCommentCreatedAt: Double = 0
     private dynamic var lastCommentSenderEmail:String = ""
     private dynamic var lastCommentSenderName:String = ""
     internal dynamic var lastCommentStatusRaw:Int = QCommentStatus.sending.rawValue
