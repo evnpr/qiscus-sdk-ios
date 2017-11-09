@@ -1240,16 +1240,21 @@ extension Qiscus:CocoaMQTTDelegate{
 extension Qiscus { // Public class API to get room
     
     public class func room(withId roomId:String, onSuccess:@escaping ((QRoom)->Void),onError:@escaping ((String)->Void)){
+        Qiscus.printLog(text:"starting get room by id")
         let service = QChatService()
         var needToLoad = true
         if let room = QRoom.room(withId: roomId){
+            Qiscus.printLog(text:"QRoom contains room id")
             if room.comments.count > 0 {
+                Qiscus.printLog(text:"QRoom contains comments more than 0")                
                 needToLoad = false
             }
             if !needToLoad {
+                Qiscus.printLog(text:"needToLoad false")                
                 onSuccess(room)
             }else{
                 service.room(withId: roomId, onSuccess: { (room) in
+                    Qiscus.printLog(text:"Service room with id success")
                     onSuccess(room)
                 }) { (error) in
                     onError(error)
@@ -1257,6 +1262,7 @@ extension Qiscus { // Public class API to get room
             }
         }else{
             service.room(withId: roomId, onSuccess: { (room) in
+                Qiscus.printLog(text:"Service room with id success even when not exist")
                 onSuccess(room)
             }) { (error) in
                 onError(error)
