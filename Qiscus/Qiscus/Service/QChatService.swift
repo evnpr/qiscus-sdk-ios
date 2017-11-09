@@ -583,24 +583,33 @@ public class QChatService:NSObject {
     }
     public func room(withId roomId:String, onSuccess:@escaping ((_ room: QRoom)->Void),onError:@escaping ((_ error: String)->Void)){
         if Qiscus.isLoggedIn {
+            Qiscus.printLog(text:"QChatService room(withId) isLoggedIn")            
             var needToLoad = true
             if let room = QRoom.room(withId: roomId){
+                Qiscus.printLog(text:"QChatService room(withId) room = QRoom.room(withId: roomId)")                
                 if room.comments.count > 0 {
+                    Qiscus.printLog(text:"QChatService room(withId) room.comments.count > 0")
                     needToLoad = false
                 }
             }
             if !needToLoad {
+                Qiscus.printLog(text:"QChatService room(withId) !needToLoad")
                 onSuccess(QRoom.room(withId: roomId)!)
             }
             else{
                 QiscusRequestThread.async { autoreleasepool{
+                    Qiscus.printLog(text:"QChatService room(withId) QiscusRequestThread.async")
                     let loadURL = QiscusConfig.ROOM_REQUEST_ID_URL
                     let parameters:[String : AnyObject] =  [
                         "id" : roomId as AnyObject,
                         "token"  : qiscus.config.USER_TOKEN as AnyObject
                     ]
+                    Qiscus.printLog(text:"QChatService room(withId) calling API")
+                    
                     Alamofire.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
+                            Qiscus.printLog(text:"QChatService room(withId) called API")
+                            
                             let json = JSON(response)
                             let results = json["results"]
                             let error = json["error"]
@@ -611,28 +620,36 @@ public class QChatService:NSObject {
                                 let commentPayload = results["comments"].arrayValue
                                 
                                 DispatchQueue.main.async { autoreleasepool{
+                                    Qiscus.printLog(text:"QChatService room(withId) main QRoom.addRoom")
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
                                         
                                         if commentId <= QiscusMe.sharedInstance.lastCommentId {
+                                            Qiscus.printLog(text:"QChatService room(withId) main saveOldComment")
                                             room.saveOldComment(fromJSON: json)
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
+                                                Qiscus.printLog(text:"QChatService room(withId) main QChatService.sync")
                                                 QChatService.sync()
                                             }}
                                         }
                                     }
+                                    Qiscus.printLog(text:"QChatService room(withId) onSuccess")                                    
                                     onSuccess(room)
                                 }}
                             }else if error != JSON.null{
+                                Qiscus.printLog(text:"QChatService room(withId) error")
                                 DispatchQueue.main.async { autoreleasepool{
+                                    Qiscus.printLog(text:"QChatService room(withId) async error \(error)")
                                     onError("\(error)")
                                 }}
                                 Qiscus.printLog(text: "\(error)")
                             }else{
                                 let error = "Failed to load room data"
+                                Qiscus.printLog(text:"QChatService room(withId) error \(error)")
                                 DispatchQueue.main.async { autoreleasepool{
+                                    Qiscus.printLog(text:"QChatService room(withId) async error \(error)")
                                     onError(error)
                                 }}
                                 Qiscus.printLog(text: "\(error)")
@@ -640,6 +657,7 @@ public class QChatService:NSObject {
                         }else{
                             let error = "Failed to load room data"
                             DispatchQueue.main.async { autoreleasepool{
+                                Qiscus.printLog(text:"QChatService room(withId) error \(error)")
                                 onError(error)
                             }}
                         }
@@ -648,6 +666,7 @@ public class QChatService:NSObject {
             }
         }else{
             self.reconnect {
+                Qiscus.printLog(text:"QChatService room(withId) reconnect")
                 self.room(withId: roomId, onSuccess: onSuccess, onError: onError)
             }
         }
@@ -672,7 +691,9 @@ public class QChatService:NSObject {
         load(onPage: 1)
     }
     @objc internal func syncProcess(first:Bool = true, cloud:Bool = false){
+        Qiscus.printLog(text:"entering syncing process")
         QiscusRequestThread.async {
+            Qiscus.printLog(text:"starting syncing process, async")            
             let loadURL = QiscusConfig.SYNC_URL
             let limit = 60
             let parameters:[String: AnyObject] =  [
@@ -681,7 +702,9 @@ public class QChatService:NSObject {
                 "order" : "asc" as AnyObject,
                 "limit" : limit as AnyObject
                 ]
+            Qiscus.printLog(text:"calling api sync")            
             Alamofire.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                Qiscus.printLog(text:"called api sync")
                 if let response = responseData.result.value {
                     let json = JSON(response)
                     let results = json["results"]
