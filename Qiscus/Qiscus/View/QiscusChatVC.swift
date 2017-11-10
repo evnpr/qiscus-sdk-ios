@@ -188,6 +188,7 @@ open class QiscusChatVC: UIViewController{
     public var navTitle:String = ""
     public var navSubtitle:String = ""
     var dataLoaded = false
+    public var countRightBar : Int = 0
     
     var showLink:Bool = false{
         didSet{
@@ -604,7 +605,7 @@ open class QiscusChatVC: UIViewController{
     }
     
     // MARK: - Setup UI
-    func setupNavigationTitle(){
+    public func setupNavigationTitle(){
         var totalButton = 1
         if let leftButtons = self.navigationItem.leftBarButtonItems {
             totalButton += leftButtons.count
@@ -620,7 +621,7 @@ open class QiscusChatVC: UIViewController{
         self.titleView.addGestureRecognizer(tapRecognizer)
         
         let containerWidth = QiscusHelper.screenWidth() - 49
-        let titleWidth = QiscusHelper.screenWidth() - CGFloat(57 * 3) - 40
+        let titleWidth = QiscusHelper.screenWidth() - CGFloat(57 * self.countRightBar) - 40
         
         self.titleLabel.frame = CGRect(x: 40, y: 7, width: titleWidth, height: 17)
         self.subtitleLabel.frame = CGRect(x: 40, y: 25, width: titleWidth, height: 13)
