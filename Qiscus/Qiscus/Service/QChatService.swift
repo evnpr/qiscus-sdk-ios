@@ -60,7 +60,7 @@ public class QChatService:NSObject {
                 onError("no change")
             }else{
                 DispatchQueue.global().async(execute: {
-                    Alamofire.request(QiscusConfig.LOGIN_REGISTER, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+                    QiscusService.session.request(QiscusConfig.LOGIN_REGISTER, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                         switch response.result {
                         case .success:
                             if let result = response.result.value{
@@ -146,8 +146,8 @@ public class QChatService:NSObject {
                                 Qiscus.printLog(text: "getListComment with id response: \(responseData)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
-                                DispatchQueue.main.async {
-                                    autoreleasepool{
+                                
+                                func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
@@ -168,6 +168,14 @@ public class QChatService:NSObject {
                                             roomDelegate.didFinishLoadRoom(onRoom: room)
                                         }
                                     }
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
                                     }
                                 }
                             }else if error != JSON.null{
@@ -236,7 +244,7 @@ public class QChatService:NSObject {
                         parameters["options"] = optionalData! as AnyObject
                     }
                     Qiscus.printLog(text: "get or create room parameters: \(parameters)")
-                    Alamofire.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                    QiscusService.session.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
                             Qiscus.printLog(text: "get or create room api response:\n\(response)")
                             let json = JSON(response)
@@ -248,8 +256,7 @@ public class QChatService:NSObject {
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
-                                DispatchQueue.main.async {
-                                    autoreleasepool{
+                                func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     
                                     for json in commentPayload {
@@ -259,10 +266,18 @@ public class QChatService:NSObject {
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
                                                 QChatService.sync()
-                                            }}
+                                                }}
                                         }
                                     }
                                     onSuccess(room)
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
                                     }
                                 }
                             }else if error != JSON.null{
@@ -322,7 +337,7 @@ public class QChatService:NSObject {
                         parameters["avatar_url"] = avatarURL as AnyObject
                     }
                     Qiscus.printLog(text: "get or create room with uniqueId parameters: \(parameters)")
-                    Alamofire.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                    QiscusService.session.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
                             Qiscus.printLog(text: "get or create room with uniqueId response:\n\(response)")
                             let json = JSON(response)
@@ -334,7 +349,7 @@ public class QChatService:NSObject {
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
-                                DispatchQueue.main.async { autoreleasepool{
+                                func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
@@ -343,7 +358,7 @@ public class QChatService:NSObject {
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
                                                 QChatService.sync()
-                                            }}
+                                                }}
                                         }
                                     }
                                     onSuccess(room)
@@ -353,7 +368,16 @@ public class QChatService:NSObject {
                                             roomDelegate.didFinishLoadRoom(onRoom: room)
                                         }
                                     }
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else if error != JSON.null{
                                 onError("\(error)")
                                 Qiscus.printLog(text: "\(error)")
@@ -416,7 +440,7 @@ public class QChatService:NSObject {
                         parameters["avatar_url"] = avatarURL as AnyObject
                     }
                     Qiscus.printLog(text: "get or create room with uniqueId parameters: \(parameters)")
-                    Alamofire.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                    QiscusService.session.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
                             Qiscus.printLog(text: "get or create room with uniqueId response:\n\(response)")
                             let json = JSON(response)
@@ -428,7 +452,7 @@ public class QChatService:NSObject {
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
-                                DispatchQueue.main.async { autoreleasepool{
+                                func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
@@ -437,7 +461,7 @@ public class QChatService:NSObject {
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
                                                 QChatService.sync()
-                                            }}
+                                                }}
                                         }
                                     }
                                     self.delegate?.chatService(didFinishLoadRoom: room, withMessage: withMessage)
@@ -447,7 +471,16 @@ public class QChatService:NSObject {
                                             roomDelegate.didFinishLoadRoom(onRoom: room)
                                         }
                                     }
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else if error != JSON.null{
                                 self.delegate?.chatService(didFailLoadRoom: "\(error)")
                                 Qiscus.printLog(text: "\(error)")
@@ -490,20 +523,31 @@ public class QChatService:NSObject {
         if Qiscus.isLoggedIn {
             var needToLoad = true
             if let room = QRoom.room(withId: roomId){
-                if room.comments.count > 0 {
-                    needToLoad = false
+                if !room.isInvalidated {
+                    if room.comments.count > 0 {
+                        needToLoad = false
+                    }
                 }
             }
             if !needToLoad {
-                let room = QRoom.room(withId: roomId)!
-                self.delegate?.chatService(didFinishLoadRoom: room, withMessage: withMessage)
-                DispatchQueue.main.async { autoreleasepool{
+                func execute(){
+                    let room = QRoom.room(withId: roomId)!
+                    self.delegate?.chatService(didFinishLoadRoom: room, withMessage: withMessage)
                     if let roomDelegate = QiscusCommentClient.shared.roomDelegate {
                         if !room.isInvalidated {
                             roomDelegate.didFinishLoadRoom(onRoom: room)
                         }
                     }
-                }}
+                }
+                if Thread.isMainThread {
+                    execute()
+                }else{
+                    DispatchQueue.main.sync {
+                        autoreleasepool{
+                            execute()
+                        }
+                    }
+                }
             }
             else{
                 QiscusRequestThread.async { autoreleasepool{
@@ -512,7 +556,7 @@ public class QChatService:NSObject {
                         "id" : roomId as AnyObject,
                         "token"  : qiscus.config.USER_TOKEN as AnyObject
                     ]
-                    Alamofire.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                    QiscusService.session.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
                             let json = JSON(response)
                             let results = json["results"]
@@ -523,7 +567,7 @@ public class QChatService:NSObject {
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
-                                DispatchQueue.main.async { autoreleasepool{
+                                func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
@@ -533,7 +577,7 @@ public class QChatService:NSObject {
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
                                                 QChatService.sync()
-                                            }}
+                                                }}
                                         }
                                     }
                                     self.delegate?.chatService(didFinishLoadRoom: room, withMessage: withMessage)
@@ -543,7 +587,16 @@ public class QChatService:NSObject {
                                             roomDelegate.didFinishLoadRoom(onRoom: room)
                                         }
                                     }
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else if error != JSON.null{
                                 self.delegate?.chatService(didFailLoadRoom: "\(error)")
                                 Qiscus.printLog(text: "\(error)")
@@ -583,33 +636,24 @@ public class QChatService:NSObject {
     }
     public func room(withId roomId:String, onSuccess:@escaping ((_ room: QRoom)->Void),onError:@escaping ((_ error: String)->Void)){
         if Qiscus.isLoggedIn {
-            Qiscus.printLog(text:"QChatService room(withId) isLoggedIn")            
             var needToLoad = true
             if let room = QRoom.room(withId: roomId){
-                Qiscus.printLog(text:"QChatService room(withId) room = QRoom.room(withId: roomId)")                
                 if room.comments.count > 0 {
-                    Qiscus.printLog(text:"QChatService room(withId) room.comments.count > 0")
                     needToLoad = false
                 }
             }
             if !needToLoad {
-                Qiscus.printLog(text:"QChatService room(withId) !needToLoad")
                 onSuccess(QRoom.room(withId: roomId)!)
             }
             else{
                 QiscusRequestThread.async { autoreleasepool{
-                    Qiscus.printLog(text:"QChatService room(withId) QiscusRequestThread.async")
                     let loadURL = QiscusConfig.ROOM_REQUEST_ID_URL
                     let parameters:[String : AnyObject] =  [
                         "id" : roomId as AnyObject,
                         "token"  : qiscus.config.USER_TOKEN as AnyObject
                     ]
-                    Qiscus.printLog(text:"QChatService room(withId) calling API")
-                    
-                    Alamofire.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                    QiscusService.session.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                         if let response = responseData.result.value {
-                            Qiscus.printLog(text:"QChatService room(withId) called API")
-                            
                             let json = JSON(response)
                             let results = json["results"]
                             let error = json["error"]
@@ -618,38 +662,36 @@ public class QChatService:NSObject {
                                 Qiscus.printLog(text: "getListComment with id response: \(responseData)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
-                                
-                                DispatchQueue.main.async { autoreleasepool{
-                                    Qiscus.printLog(text:"QChatService room(withId) main QRoom.addRoom")
+                                func saveRoom(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
                                         let commentId = json["id"].intValue
                                         
                                         if commentId <= QiscusMe.sharedInstance.lastCommentId {
-                                            Qiscus.printLog(text:"QChatService room(withId) main saveOldComment")
                                             room.saveOldComment(fromJSON: json)
                                         }else{
                                             QiscusBackgroundThread.async { autoreleasepool{
-                                                Qiscus.printLog(text:"QChatService room(withId) main QChatService.sync")
                                                 QChatService.sync()
-                                            }}
+                                                }}
                                         }
                                     }
-                                    Qiscus.printLog(text:"QChatService room(withId) onSuccess")                                    
                                     onSuccess(room)
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    saveRoom()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        saveRoom()
+                                    }
+                                }
                             }else if error != JSON.null{
-                                Qiscus.printLog(text:"QChatService room(withId) error")
                                 DispatchQueue.main.async { autoreleasepool{
-                                    Qiscus.printLog(text:"QChatService room(withId) async error \(error)")
                                     onError("\(error)")
                                 }}
                                 Qiscus.printLog(text: "\(error)")
                             }else{
                                 let error = "Failed to load room data"
-                                Qiscus.printLog(text:"QChatService room(withId) error \(error)")
                                 DispatchQueue.main.async { autoreleasepool{
-                                    Qiscus.printLog(text:"QChatService room(withId) async error \(error)")
                                     onError(error)
                                 }}
                                 Qiscus.printLog(text: "\(error)")
@@ -657,7 +699,6 @@ public class QChatService:NSObject {
                         }else{
                             let error = "Failed to load room data"
                             DispatchQueue.main.async { autoreleasepool{
-                                Qiscus.printLog(text:"QChatService room(withId) error \(error)")
                                 onError(error)
                             }}
                         }
@@ -666,7 +707,6 @@ public class QChatService:NSObject {
             }
         }else{
             self.reconnect {
-                Qiscus.printLog(text:"QChatService room(withId) reconnect")
                 self.room(withId: roomId, onSuccess: onSuccess, onError: onError)
             }
         }
@@ -691,10 +731,7 @@ public class QChatService:NSObject {
         load(onPage: 1)
     }
     @objc internal func syncProcess(first:Bool = true, cloud:Bool = false){
-        Qiscus.printLog(text:"entering syncing process")
         QiscusRequestThread.async {
-            QiscusNotification.publish(startCloudSync: true)
-            Qiscus.printLog(text:"starting syncing process, async")            
             let loadURL = QiscusConfig.SYNC_URL
             let limit = 60
             let parameters:[String: AnyObject] =  [
@@ -703,9 +740,7 @@ public class QChatService:NSObject {
                 "order" : "asc" as AnyObject,
                 "limit" : limit as AnyObject
                 ]
-            Qiscus.printLog(text:"calling api sync")            
-            Alamofire.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
-                Qiscus.printLog(text:"called api sync")
+            QiscusService.session.request(loadURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                 if let response = responseData.result.value {
                     let json = JSON(response)
                     let results = json["results"]
@@ -784,9 +819,9 @@ public class QChatService:NSObject {
                                 self.sync(first: false, cloud: cloud)
                             }else{
                                 Qiscus.printLog(text: "finish syncing process.")
-//                                if cloud {
+                                if cloud {
                                     QiscusNotification.publish(finishedCloudSync: true)
-//                                }
+                                }
                                 if !Qiscus.realtimeConnected {
                                     Qiscus.mqttConnect()
                                 }else{
@@ -837,7 +872,6 @@ public class QChatService:NSObject {
     public class func sync(cloud:Bool = false){
         DispatchQueue.main.async {
             QChatService.defaultService.sync(cloud: cloud)
-            
         }
     }
     public func createRoom(withUsers users:[String], roomName:String, optionalData:String? = nil, withMessage:String? = nil){ //
@@ -855,7 +889,7 @@ public class QChatService:NSObject {
                     parameters["options"] = optionalData! as AnyObject
                 }
                 Qiscus.printLog(text: "create new room parameters: \(parameters)")
-                Alamofire.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                QiscusService.session.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                     if let response = responseData.result.value {
                         Qiscus.printLog(text: "create group room api response:\n\(response)")
                         let json = JSON(response)
@@ -867,7 +901,7 @@ public class QChatService:NSObject {
                             let roomData = results["room"]
                             let commentPayload = results["comments"].arrayValue
                             
-                            DispatchQueue.main.async { autoreleasepool{
+                            func execute(){
                                 let room = QRoom.addRoom(fromJSON: roomData)
                                 for json in commentPayload {
                                     let commentId = json["id"].intValue
@@ -883,7 +917,16 @@ public class QChatService:NSObject {
                                         roomDelegate.didFinishLoadRoom(onRoom: room)
                                     }
                                 }
-                            }}
+                            }
+                            if Thread.isMainThread {
+                                execute()
+                            }else{
+                                DispatchQueue.main.sync {
+                                    autoreleasepool{
+                                        execute()
+                                    }
+                                }
+                            }
                         }else if error != JSON.null{
                             self.delegate?.chatService(didFailLoadRoom: "\(error)")
                             Qiscus.printLog(text: "\(error)")
@@ -936,7 +979,7 @@ public class QChatService:NSObject {
                     parameters["avatar_url"] = avatarURL as AnyObject
                 }
                 
-                Alamofire.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
+                QiscusService.session.request(loadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: {responseData in
                     if let response = responseData.result.value {
                         Qiscus.printLog(text: "create group room api response:\n\(response)")
                         let json = JSON(response)
@@ -948,7 +991,7 @@ public class QChatService:NSObject {
                             let roomData = results["room"]
                             let commentPayload = results["comments"].arrayValue
                             
-                            DispatchQueue.main.async { autoreleasepool{
+                            func execute(){
                                 let room = QRoom.addRoom(fromJSON: roomData)
                                 for json in commentPayload {
                                     let commentId = json["id"].intValue
@@ -958,7 +1001,16 @@ public class QChatService:NSObject {
                                     }
                                 }
                                 onSuccess(room)
-                            }}
+                            }
+                            if Thread.isMainThread {
+                                execute()
+                            }else{
+                                DispatchQueue.main.sync {
+                                    autoreleasepool {
+                                        execute()
+                                    }
+                                }
+                            }
                         }else if error != JSON.null{
                             DispatchQueue.main.async { autoreleasepool{
                                 onError("\(error)")
@@ -995,45 +1047,53 @@ public class QChatService:NSObject {
             Qiscus.printLog(text: "registerDevice url: \(QiscusConfig.SET_DEVICE_TOKEN_URL)")
             Qiscus.printLog(text: "post parameters: \(parameters)")
             
-            Alamofire.request(QiscusConfig.SET_DEVICE_TOKEN_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.SET_DEVICE_TOKEN_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 Qiscus.printLog(text: "registerDevice result: \(response)")
                 Qiscus.printLog(text: "registerDevice url: \(QiscusConfig.LOGIN_REGISTER)")
                 Qiscus.printLog(text: "registerDevice parameters: \(parameters)")
                 Qiscus.printLog(text: "registerDevice headers: \(QiscusConfig.sharedInstance.requestHeader)")
                 switch response.result {
                 case .success:
-                    DispatchQueue.main.async(execute: {
-                        if let result = response.result.value{
-                            let json = JSON(result)
-                            let success:Bool = (json["status"].intValue == 200)
-                            
-                            if success {
-                                let pnData = json["results"]
-                                let configured = pnData["pn_ios_configured"].boolValue
-                                if configured {
-                                    if let delegate = Qiscus.shared.delegate {
+                    if let result = response.result.value{
+                        let json = JSON(result)
+                        let success:Bool = (json["status"].intValue == 200)
+                        
+                        if success {
+                            let pnData = json["results"]
+                            let configured = pnData["pn_ios_configured"].boolValue
+                            if configured {
+                                if let delegate = Qiscus.shared.delegate {
+                                    DispatchQueue.main.async {
                                         delegate.qiscus?(didRegisterPushNotification: true, deviceToken: deviceToken, error: nil)
-                                    }
-                                }else{
-                                    if let delegate = Qiscus.shared.delegate  {
-                                        delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "failed to register deviceToken : pushNotification not configured")
                                     }
                                 }
                             }else{
-                                if let delegate = Qiscus.shared.delegate {
-                                    delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "unsuccessful register deviceToken")
+                                if let delegate = Qiscus.shared.delegate  {
+                                    DispatchQueue.main.async {
+                                        delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "failed to register deviceToken : pushNotification not configured")
+                                    }
                                 }
                             }
                         }else{
                             if let delegate = Qiscus.shared.delegate {
+                                DispatchQueue.main.async {
+                                    delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "unsuccessful register deviceToken")
+                                }
+                            }
+                        }
+                    }else{
+                        if let delegate = Qiscus.shared.delegate {
+                            DispatchQueue.main.async {
                                 delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "unsuccessful register deviceToken")
                             }
                         }
-                    })
+                    }
                     break
                 case .failure(let error):
                     if let delegate = Qiscus.shared.delegate {
-                        delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "unsuccessful register deviceToken: \(error)")
+                        DispatchQueue.main.async {
+                            delegate.qiscus?(didRegisterPushNotification: false, deviceToken: deviceToken, error: "unsuccessful register deviceToken: \(error)")
+                        }
                     }
                     break
                 }
@@ -1066,7 +1126,7 @@ public class QChatService:NSObject {
             
             let authURL = "\(QiscusConfig.sharedInstance.BASE_API_URL)/auth/nonce"
             
-            Alamofire.request(authURL, method: .post, parameters: nil, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(authURL, method: .post, parameters: nil, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 
                 switch response.result {
                 case .success:
@@ -1108,7 +1168,7 @@ public class QChatService:NSObject {
                 "identity_token"  : uidToken as AnyObject
             ]
             
-            Alamofire.request(authURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(authURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 
                 switch response.result {
                 case .success:
@@ -1172,7 +1232,7 @@ public class QChatService:NSObject {
                 }
                 //Qiscus.printLog(text: "room list url: \(QiscusConfig.SEARCH_URL)")
                 //Qiscus.printLog(text: "room list parameters: \(parameters)")
-                Alamofire.request(QiscusConfig.ROOMLIST_URL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+                QiscusService.session.request(QiscusConfig.ROOMLIST_URL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                     //Qiscus.printLog(text: "room list result: \(response)")
                     switch response.result {
                     case .success:
@@ -1246,7 +1306,7 @@ public class QChatService:NSObject {
                 "room_id" : [id] as AnyObject,
                 "show_participants": true as AnyObject
             ]
-            Alamofire.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 
                 switch response.result {
                 case .success:
@@ -1258,7 +1318,7 @@ public class QChatService:NSObject {
                             let roomsData = resultData["rooms_info"].arrayValue
                             if roomsData.count > 0 {
                                 let roomData = roomsData[0]
-                                DispatchQueue.main.async { autoreleasepool {
+                                func execute(){
                                     let roomId = "\(roomData["id"])"
                                     let unread = roomData["unread_count"].intValue
                                     if let room = QRoom.room(withId: roomId){
@@ -1282,9 +1342,19 @@ public class QChatService:NSObject {
                                             onFailed("room has been deleted")
                                         }
                                     }
-                                }}
+                                }
+                                
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool {
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else{
-                                DispatchQueue.main.async {
+                                func execute(){
                                     if let chatView = Qiscus.shared.chatViews[id] {
                                         if chatView.isPresence {
                                             chatView.goBack()
@@ -1300,6 +1370,15 @@ public class QChatService:NSObject {
                                         }
                                     }
                                     QiscusNotification.publish(roomDeleted: id)
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
                                 }
                                 onFailed("noAccess to room")
                             }
@@ -1327,7 +1406,7 @@ public class QChatService:NSObject {
             ]
             Qiscus.printLog(text: "rooms info url: \(QiscusConfig.SEARCH_URL)")
             Qiscus.printLog(text: "rooms info parameters: \(parameters)")
-            Alamofire.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 Qiscus.printLog(text: "rooms info result: \(response)")
                 switch response.result {
                 case .success:
@@ -1340,7 +1419,7 @@ public class QChatService:NSObject {
                             let roomsData = resultData["rooms_info"].arrayValue
                             
                             if roomsData.count > 0 {
-                                DispatchQueue.main.async { autoreleasepool {
+                                func execute(){
                                     var rooms = [QRoom]()
                                     for roomData in roomsData {
                                         let roomId = "\(roomData["id"])"
@@ -1357,7 +1436,16 @@ public class QChatService:NSObject {
                                         }
                                     }
                                     onSuccess(rooms)
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else{
                                 onFailed("all requested room not found")
                             }
@@ -1384,7 +1472,7 @@ public class QChatService:NSObject {
             ]
             Qiscus.printLog(text: "room info url: \(QiscusConfig.ROOMINFO_URL)")
             Qiscus.printLog(text: "room info parameters: \(parameters)")
-            Alamofire.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 switch response.result {
                 case .success:
                     if let result = response.result.value{
@@ -1397,7 +1485,7 @@ public class QChatService:NSObject {
                             
                             if roomsData.count > 0 {
                                 let roomData = roomsData[0]
-                                DispatchQueue.main.async { autoreleasepool {
+                                func execute(){
                                     let roomId = "\(roomData["id"])"
                                     let unread = roomData["unread_count"].intValue
                                     if let room = QRoom.room(withId: roomId){
@@ -1417,7 +1505,16 @@ public class QChatService:NSObject {
                                         room.updateUnreadCommentCount(count: unread)
                                         onSuccess(room)
                                     }
-                                }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        autoreleasepool{
+                                            execute()
+                                        }
+                                    }
+                                }
                             }else{
                                 onFailed("room notfound")
                             }
@@ -1445,7 +1542,7 @@ public class QChatService:NSObject {
             ]
             Qiscus.printLog(text: "rooms info url: \(QiscusConfig.SEARCH_URL)")
             Qiscus.printLog(text: "rooms info parameters: \(parameters)")
-            Alamofire.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 Qiscus.printLog(text: "rooms info result: \(response)")
                 switch response.result {
                 case .success:
@@ -1458,7 +1555,7 @@ public class QChatService:NSObject {
                             let roomsData = resultData["rooms_info"].arrayValue
                             
                             if roomsData.count > 0 {
-                                DispatchQueue.main.async { autoreleasepool {
+                                func execute(){
                                     var rooms = [QRoom]()
                                     for roomData in roomsData {
                                         let roomId = "\(roomData["id"])"
@@ -1475,7 +1572,14 @@ public class QChatService:NSObject {
                                         }
                                     }
                                     onSuccess(rooms)
-                                    }}
+                                }
+                                if Thread.isMainThread {
+                                    execute()
+                                }else{
+                                    DispatchQueue.main.sync {
+                                        execute()
+                                    }
+                                }
                             }else{
                                 onFailed("all requested room not found")
                             }
@@ -1513,7 +1617,7 @@ public class QChatService:NSObject {
             }
             Qiscus.printLog(text: "search url: \(QiscusConfig.SEARCH_URL)")
             Qiscus.printLog(text: "search parameters: \(parameters)")
-            Alamofire.request(QiscusConfig.SEARCH_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
+            QiscusService.session.request(QiscusConfig.SEARCH_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 Qiscus.printLog(text: "search result: \(response)")
                 switch response.result {
                 case .success:
@@ -1525,7 +1629,7 @@ public class QChatService:NSObject {
                             let resultData = json["results"]
                             let comments = resultData["comments"].arrayValue
                             
-                            DispatchQueue.main.async { autoreleasepool {
+                            func execute(){
                                 var commentResult = [QComment]()
                                 for commentData in comments {
                                     let uniqueId = commentData["unique_temp_id"].stringValue
@@ -1537,7 +1641,14 @@ public class QChatService:NSObject {
                                     }
                                 }
                                 onSuccess(commentResult)
-                            }}
+                            }
+                            if Thread.isMainThread {
+                                execute()
+                            }else{
+                                DispatchQueue.main.sync {
+                                    execute()
+                                }
+                            }
                         }else{
                             onFailed("can't get search result")
                         }

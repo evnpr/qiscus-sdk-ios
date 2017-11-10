@@ -55,8 +55,8 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     public var iCloudUpload = false
     public var cameraUpload = true
     public var galeryUpload = true
-    public var contactShare = false
-    public var locationShare = false
+    public var contactShare = true
+    public var locationShare = true
     
     var isPushed:Bool = false
     var reachability:QReachability?
@@ -158,14 +158,17 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         QComment.cache = [String : QComment]()
         QUser.cache = [String: QUser]()
         Qiscus.shared.chatViews = [String:QiscusChatVC]()
+        Qiscus.cancellAllRequest()
+        Qiscus.removeAllFile()
         
         Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
         Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
+        
         let realm = try! Realm(configuration: Qiscus.dbConfiguration)
         try! realm.write {
             realm.deleteAll()
         }
-        Qiscus.deleteAllFiles()
+        Qiscus.removeDB()
     }
     @objc public class func unRegisterPN(){
         if Qiscus.isLoggedIn {
@@ -228,7 +231,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         QChatService.updateProfil(userName: username, userAvatarURL: avatarURL, onSuccess: onSuccess, onError: onFailed)
     }
     @objc public class func setup(withAppId appId:String, userEmail:String, userKey:String, username:String, avatarURL:String? = nil, delegate:QiscusConfigDelegate? = nil, secureURl:Bool = true){
-        Qiscus.checkDatabaseMigration()
+        Qiscus.checkDatabaseMigration(force:true)
         var requestProtocol = "https"
         if !secureURl {
             requestProtocol = "http"
@@ -619,23 +622,9 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
             Qiscus.shared.diagnosticDelegate?.qiscusDiagnostic(sendLog: "[Qiscus]: \(text)")
         }
     }
-    class func deleteAllFiles(){
-        let fileManager = FileManager.default
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let qiscusDirPath = "\(dirPath)/Qiscus"
-        
-        do {
-            let filePaths = try fileManager.contentsOfDirectory(atPath: qiscusDirPath)
-            for filePath in filePaths {
-                try fileManager.removeItem(atPath: NSTemporaryDirectory() + filePath)
-            }
-        } catch let error as NSError {
-            Qiscus.printLog(text: "Could not clear temp folder: \(error.debugDescription)")
-        }
-    }
     
     // MARK: - local DB
-    class func checkDatabaseMigration(){
+    class func checkDatabaseMigration(force:Bool = false){
         if Qiscus.dbConfiguration.fileURL?.lastPathComponent != "Qiscus.realm" {
             Qiscus.dbConfiguration = Realm.Configuration.defaultConfiguration
             var realmURL = Qiscus.dbConfiguration.fileURL!
@@ -1178,11 +1167,10 @@ extension Qiscus:CocoaMQTTDelegate{
     }
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?){
         if Qiscus.isLoggedIn {
-            if self.syncTimer != nil {
-                self.syncTimer!.invalidate()
+            if let timer = self.syncTimer {
+                timer.invalidate()
             }
             self.syncTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.sync), userInfo: nil, repeats: true)
-            
         }
     }
     
@@ -1216,13 +1204,14 @@ extension Qiscus:CocoaMQTTDelegate{
         QParticipant.cacheAll()
     }
     @objc public class func getNonce(withAppId appId:String, onSuccess:@escaping ((String)->Void), onFailed:@escaping ((String)->Void), secureURL:Bool = true){
-        Qiscus.checkDatabaseMigration()
+        Qiscus.checkDatabaseMigration(force:true)
         QChatService.getNonce(withAppId: appId, onSuccess: onSuccess, onFailed: onFailed)
     }
     @objc public class func setup(withUserIdentityToken uidToken:String, delegate: QiscusConfigDelegate? = nil){
         if delegate != nil {
             Qiscus.shared.delegate = delegate
         }
+        Qiscus.checkDatabaseMigration(force:true)
         QChatService.setup(withuserIdentityToken: uidToken)
         Qiscus.setupReachability()
         Qiscus.sharedInstance.RealtimeConnect()
@@ -1240,35 +1229,31 @@ extension Qiscus:CocoaMQTTDelegate{
 extension Qiscus { // Public class API to get room
     
     public class func room(withId roomId:String, onSuccess:@escaping ((QRoom)->Void),onError:@escaping ((String)->Void)){
-        Qiscus.printLog(text:"starting get room by id")
         let service = QChatService()
         var needToLoad = true
-        if let room = QRoom.room(withId: roomId){
-            Qiscus.printLog(text:"QRoom contains room id")
-            if room.comments.count > 0 {
-                Qiscus.printLog(text:"QRoom contains comments more than 0")                
-                needToLoad = false
-            }
-            if !needToLoad {
-                Qiscus.printLog(text:"needToLoad false")                
-                onSuccess(room)
-            }else{
-                service.room(withId: roomId, onSuccess: { (room) in
-                    Qiscus.printLog(text:"Service room with id success")
-                    onSuccess(room)
-                }) { (error) in
-                    onError(error)
-                }
-            }
-        }else{
+        func loadRoom(){
             service.room(withId: roomId, onSuccess: { (room) in
-                Qiscus.printLog(text:"Service room with id success even when not exist")
-                onSuccess(room)
+                if room.isInvalidated {
+                    loadRoom()
+                }else{
+                    onSuccess(room)
+                }
             }) { (error) in
                 onError(error)
             }
         }
-        
+        if let room = QRoom.room(withId: roomId){
+            if room.comments.count > 0 {
+                needToLoad = false
+            }
+            if !needToLoad {
+                onSuccess(room)
+            }else{
+                loadRoom()
+            }
+        }else{
+            loadRoom()
+        }
     }
     
     public class func room(withChannel channelName:String, title:String = "", avatarURL:String, onSuccess:@escaping ((QRoom)->Void),onError:@escaping ((String)->Void)){
@@ -1389,5 +1374,40 @@ extension Qiscus { // Public class API to get room
         }
     }
     
+    public class func removeAllFile(){
+        let filemanager = FileManager.default
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as NSString
+        let destinationPath = documentsPath.appendingPathComponent("Qiscus")
+        //print("destinationPath: \(destinationPath)")
+        do {
+            try filemanager.removeItem(atPath: destinationPath)
+        } catch {
+            Qiscus.printLog(text: "Could not clear Qiscus folder: \(error.localizedDescription)")
+        }
+        
+    }
+    public class func cancellAllRequest(){
+        let sessionManager = QiscusService.session
+        sessionManager.session.getAllTasks { (allTask) in
+            allTask.forEach({ (task) in
+                task.cancel()
+            })
+        }
+    }
+    public class func removeDB(){
+        let filemanager = FileManager.default
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as NSString
+        let destinationPaths = [documentsPath.appendingPathComponent("Qiscus.realm"),
+                                documentsPath.appendingPathComponent("Qiscus.realm.lock"),
+                                documentsPath.appendingPathComponent("Qiscus.realm.management")]
+        
+        for destination in destinationPaths {
+            do {
+                try filemanager.removeItem(atPath: destination)
+            } catch {
+                Qiscus.printLog(text: "Could not clear Qiscus folder: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
