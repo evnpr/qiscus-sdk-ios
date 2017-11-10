@@ -345,14 +345,36 @@ extension QiscusChatVC {
         DispatchQueue.main.async {autoreleasepool{
             if self.chatSubtitle == nil || self.chatSubtitle == ""{
                 if let room = self.chatRoom {
-                    var subtitleString = "You"
+                    var subtitleString = ""
                     if room.type == .group{
-                        for participant in room.participants{
-                            if participant.email != QiscusMe.sharedInstance.email {
-                                if let user = participant.user {
-                                    subtitleString += ", \(user.fullname)"
+//                        for participant in room.participants{
+//                            if participant.email != QiscusMe.sharedInstance.email {
+//                                if let user = participant.user {
+//                                   // subtitleString += ", \(user.fullname)"
+//                                }
+//                            }
+//                        }
+                        
+                        if room.participants.count > 0 {
+                            for participant in room.participants {
+                                if participant.email != QiscusMe.sharedInstance.email{
+                                    if let user = participant.user{
+                                        if user.lastSeen == Double(0){
+                                            subtitleString = "Offline"
+                                        }else{
+                                            print("user.lastSeenString =\(user.lastSeenString)")
+                                            if user.lastSeenString == "Online" {
+                                                subtitleString = "Online"
+                                            }else{
+                                                subtitleString = "last seen: \(user.lastSeenString)"
+                                            }
+                                        }
+                                    }
+                                    break
                                 }
                             }
+                        }else{
+                            subtitleString = "not available"
                         }
                     }else{
                         if room.participants.count > 0 {
@@ -360,10 +382,10 @@ extension QiscusChatVC {
                                 if participant.email != QiscusMe.sharedInstance.email{
                                     if let user = participant.user{
                                         if user.lastSeen == Double(0){
-                                            subtitleString = "is offline"
+                                            subtitleString = "Offline"
                                         }else{
-                                            if user.lastSeenString == "online" {
-                                                subtitleString = "is online"
+                                            if user.lastSeenString == "Online" {
+                                                subtitleString = "Online"
                                             }else{
                                                 subtitleString = "last seen: \(user.lastSeenString)"
                                             }
@@ -377,7 +399,7 @@ extension QiscusChatVC {
                         }
                     }
                     if subtitleString != "not available" {
-                        if subtitleString == "online" || subtitleString.contains("minute") || subtitleString.contains("hours") {
+                        if subtitleString == "Online" || subtitleString.contains("minute") || subtitleString.contains("hours") {
                             var delay = 60.0 * Double(NSEC_PER_SEC)
                             if subtitleString.contains("hours"){
                                 delay = 3600.0 * Double(NSEC_PER_SEC)
@@ -387,6 +409,7 @@ extension QiscusChatVC {
                                 self.loadSubtitle()
                             })
                         }
+                        self.subtitleLabel.text = subtitleString
                     }
                     self.subtitleLabel.text = subtitleString
                 }

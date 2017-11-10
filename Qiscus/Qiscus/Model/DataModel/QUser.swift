@@ -50,7 +50,7 @@ public class QUser:Object {
     public var lastSeenString:String{
         get{
             if self.lastSeen == 0 {
-                return "offline"
+                return "Offline"
             }else{
                 var result = ""
                 let date = Date(timeIntervalSince1970: self.lastSeen)
@@ -66,14 +66,14 @@ public class QUser:Object {
                 let time = Double(now.timeIntervalSince1970)
                 
                 if time < self.lastSeen {
-                    result = "offline"
+                    result = "Offline"
                 }else{
                     let secondDiff = now.offsetFromInSecond(date: date)
                     let minuteDiff = Int(secondDiff/60)
                     let hourDiff = Int(minuteDiff/60)
                     
                     if minuteDiff < 2 {
-                        result = "online"
+                        result = "Online"
                     }
                     else if minuteDiff < 60 {
                         result = "\(Int(secondDiff/60)) minute ago"
