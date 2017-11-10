@@ -693,6 +693,7 @@ public class QChatService:NSObject {
     @objc internal func syncProcess(first:Bool = true, cloud:Bool = false){
         Qiscus.printLog(text:"entering syncing process")
         QiscusRequestThread.async {
+            QiscusNotification.publish(startCloudSync: true)
             Qiscus.printLog(text:"starting syncing process, async")            
             let loadURL = QiscusConfig.SYNC_URL
             let limit = 60
@@ -783,9 +784,9 @@ public class QChatService:NSObject {
                                 self.sync(first: false, cloud: cloud)
                             }else{
                                 Qiscus.printLog(text: "finish syncing process.")
-                                if cloud {
+//                                if cloud {
                                     QiscusNotification.publish(finishedCloudSync: true)
-                                }
+//                                }
                                 if !Qiscus.realtimeConnected {
                                     Qiscus.mqttConnect()
                                 }else{
