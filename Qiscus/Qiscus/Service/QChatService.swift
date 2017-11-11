@@ -823,7 +823,11 @@ public class QChatService:NSObject {
                                     QiscusNotification.publish(finishedCloudSync: true)
                                 }
                                 if !Qiscus.realtimeConnected {
-                                    Qiscus.mqttConnect()
+                                    let delay = 3.0 * Double(NSEC_PER_SEC)
+                                    let time = DispatchTime.now() + delay / Double(NSEC_PER_SEC)
+                                    DispatchQueue.main.asyncAfter(deadline: time, execute: {
+                                        Qiscus.mqttConnect()
+                                    })
                                 }else{
                                     if Qiscus.shared.syncTimer != nil {
                                         Qiscus.shared.syncTimer?.invalidate()
