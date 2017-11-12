@@ -199,7 +199,8 @@ extension QiscusChatVC {
         self.typingIndicatorUser = user
         self.isTypingOn = true
         //let typingText = "\(user) is typing ..."
-        let typingText = "Typing ..."
+        let typingText = "Typing..."
+        self.subtitleLabel.font = UIFont.italicSystemFont(ofSize: self.subtitleLabel.font.pointSize)
         self.subtitleLabel.text = typingText
         if self.remoteTypingTimer != nil {
             if self.remoteTypingTimer!.isValid {
@@ -410,10 +411,25 @@ extension QiscusChatVC {
                             })
                         }
                         self.subtitleLabel.text = subtitleString
+                        if(subtitleString == "Online" || subtitleString == "Offline"){
+                            self.subtitleLabel.font = UIFont.italicSystemFont(ofSize: self.subtitleLabel.font.pointSize)
+                        }else{
+                            self.subtitleLabel.font = UIFont.systemFont(ofSize: self.subtitleLabel.font.pointSize)
+                        }
+                    }
+                    if(subtitleString == "Online" || subtitleString == "Offline"){
+                        self.subtitleLabel.font = UIFont.italicSystemFont(ofSize: self.subtitleLabel.font.pointSize)
+                    }else{
+                        self.subtitleLabel.font = UIFont.systemFont(ofSize: self.subtitleLabel.font.pointSize)
                     }
                     self.subtitleLabel.text = subtitleString
                 }
             }else{
+                if(self.chatSubtitle == "Online" || self.chatSubtitle == "Offline"){
+                    self.subtitleLabel.font = UIFont.italicSystemFont(ofSize: self.subtitleLabel.font.pointSize)
+                }else{
+                    self.subtitleLabel.font = UIFont.systemFont(ofSize: self.subtitleLabel.font.pointSize)
+                }
                 self.subtitleLabel.text = self.chatSubtitle!
             }
         }}
