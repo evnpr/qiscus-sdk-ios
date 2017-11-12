@@ -1014,6 +1014,12 @@ extension QiscusChatVC:QRoomDelegate{
         self.inputBarHeight.constant = 0
         self.minInputHeight.constant = 0
     }
+    
+    public func hideInputBarAndShowRate(){
+        self.inputBar.isHidden = true
+        self.inputBarHeight.constant = 10
+        self.linkPreviewContainer.isHidden = true
+    }
     open func reply(toComment comment:QComment?){
         if comment == nil {
             Qiscus.uiThread.async { autoreleasepool{
