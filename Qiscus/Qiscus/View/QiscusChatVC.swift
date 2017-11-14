@@ -360,7 +360,13 @@ open class QiscusChatVC: UIViewController{
         self.welcomeText.text = QiscusTextConfiguration.sharedInstance.emptyTitle
         self.welcomeSubtitle.text = QiscusTextConfiguration.sharedInstance.emptyMessage
         self.emptyChatImage.image = Qiscus.style.assets.emptyChat
-        self.inputText.placeholder = QiscusTextConfiguration.sharedInstance.textPlaceholder
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        if(preferredLanguage.range(of:"id") != nil){
+            self.inputText.placeholder = QiscusTextConfiguration.sharedInstance.textPlaceholderIN
+        }else{
+            self.inputText.placeholder = QiscusTextConfiguration.sharedInstance.textPlaceholderEN
+        }
+        
         self.inputText.chatInputDelegate = self
         
         // Keyboard stuff.

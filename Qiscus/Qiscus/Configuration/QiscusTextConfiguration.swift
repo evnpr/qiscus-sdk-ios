@@ -27,9 +27,12 @@ open class QiscusTextConfiguration: NSObject {
     open var readOnlyText = "Archieved message: This message was locked. Click the key to open the conversation."
     
     /// Your text placeholder if you want to send any message, Default value : "Text a message here ..."
-    open var textPlaceholder = "Enter Message"
+    open var textPlaceholderEN = "Enter Message"
+    open var textPlaceholderIN = "Masukkan pesan"
     
     public var captionPlaceholder = "Caption here..."
+    public var captionPlaceholderIN = "Keterangan disini..."
+    
     /// Your text to show as title alert when you access gallery but you not allow gallery access, Default value : "Important"
     open var galeryAccessAlertTitle = "Important"
     

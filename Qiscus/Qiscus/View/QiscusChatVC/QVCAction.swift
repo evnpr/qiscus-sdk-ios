@@ -97,22 +97,36 @@ extension QiscusChatVC {
         self.present(self.contactVC, animated: true, completion: nil)
     }
     func showAttachmentMenu(){
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        var Gallery : String = ""
+        var Camera : String = ""
+        var Cancel  : String = ""
+        if(preferredLanguage.range(of:"id") != nil){
+            Gallery = "Galeri"
+            Camera  = "Kamera"
+            Cancel  = "Batal"
+        }else{
+            Gallery = "Gallery"
+            Camera  = "Camera"
+            Cancel  = "Cancel"
+        }
+        
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+        let cancelActionButton = UIAlertAction(title: Cancel, style: .cancel) { action -> Void in
             Qiscus.printLog(text: "Cancel attach file")
         }
         actionSheetController.addAction(cancelActionButton)
         
         if Qiscus.shared.cameraUpload {
-            let cameraActionButton = UIAlertAction(title: "Camera", style: .default) { action -> Void in
+            let cameraActionButton = UIAlertAction(title: Camera, style: .default) { action -> Void in
                 self.uploadFromCamera()
             }
             actionSheetController.addAction(cameraActionButton)
         }
         
         if Qiscus.shared.galeryUpload {
-            let galeryActionButton = UIAlertAction(title: "Gallery", style: .default) { action -> Void in
+            let galeryActionButton = UIAlertAction(title: Gallery, style: .default) { action -> Void in
                 self.uploadImage()
             }
             actionSheetController.addAction(galeryActionButton)
@@ -800,7 +814,7 @@ extension QiscusChatVC {
             fileContent = try! Data(contentsOf: audioURL)
             let mediaSize = Double(fileContent!.count) / 1024.0
             if mediaSize > Qiscus.maxUploadSizeInKB {
-                self.showFileTooBigAlert()
+                self.showFileTooBigAlert(type :.file)
                 return
             }
             let fileName = audioURL.lastPathComponent

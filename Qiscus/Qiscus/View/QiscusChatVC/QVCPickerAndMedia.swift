@@ -53,18 +53,39 @@ extension QiscusChatVC:GalleryItemsDatasource{
 }
 // MARK: - UIImagePickerDelegate
 extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func showFileTooBigAlert(type: ErrorUploadType = .image){
-        var errorTitle  : String    = NSLocalizedString("Fail to upload", comment: "")
-        var errorBody   : String    = NSLocalizedString("File too big", comment: "")
+    func showFileTooBigAlert(type: ErrorUploadType = .file){
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        
+        var errorTitle  : String = "Fail to upload."
+        var errorBody   : String = "File size too large."
+        var cancel      : String = "Cancel"
+        var sizeImage   : Double = Qiscus.maxUploadImageSize/1024.0
+        var sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024.0
         
         if type == .image {
-            errorBody   = NSLocalizedString("File too big \n ", comment: "")
+            if(preferredLanguage.range(of:"id") != nil){
+                errorTitle = "Gagal menggugah."
+                errorBody  = "Size file terlalu besar. \nSize gambar maximum \(sizeImage) Mb"
+                cancel     = "Batal"
+            }else{
+                errorTitle = "Fail to upload."
+                errorBody  = "File size too large. \nMax image size \(sizeImage) Mb"
+                cancel     = "Cancel"
+            }
         }else if type == .video {
-            errorBody   = NSLocalizedString("File too big \n ", comment: "")
+            if(preferredLanguage.range(of:"id") != nil){
+                errorTitle = "Gagal menggugah."
+                errorBody  = "Size file terlalu besar. \nMax video size \(sizeVideo) Mb"
+                cancel     = "Batal"
+            }else{
+                errorTitle = "Fail to upload."
+                errorBody  = "File size too large. \nMax video size \(sizeVideo) Mb"
+                cancel     = "Cancel"
+            }
         }
         
         let alertController = UIAlertController(title: errorTitle, message: errorBody, preferredStyle: .alert)
-        let galeryActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ -> Void in }
+        let galeryActionButton = UIAlertAction(title: cancel, style: .cancel) { _ -> Void in }
         alertController.addAction(galeryActionButton)
         self.present(alertController, animated: true, completion: nil)
     }
@@ -152,7 +173,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                     if mediaSize > Qiscus.maxUploadImageSize {
                         picker.dismiss(animated: true, completion: {
                             self.processingFile = false
-                            self.showFileTooBigAlert()
+                            self.showFileTooBigAlert(type: .image)
                         })
                         return
                     }
@@ -177,7 +198,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                 if mediaSize > Qiscus.maxUploadVideoSize {
                     picker.dismiss(animated: true, completion: {
                         self.processingFile = false
-                        self.showFileTooBigAlert()
+                        self.showFileTooBigAlert(type: .video)
                     })
                     return
                 }
@@ -229,7 +250,7 @@ extension QiscusChatVC: UIDocumentPickerDelegate{
                 if mediaSize > Qiscus.maxUploadSizeInKB {
                     self.processingFile = false
                     self.dismissLoading()
-                    self.showFileTooBigAlert()
+                    self.showFileTooBigAlert(type: .file)
                     return
                 }
                 

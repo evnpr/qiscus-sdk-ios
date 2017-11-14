@@ -38,7 +38,13 @@ class QiscusUploaderVC: UIViewController, UIScrollViewDelegate {
         self.sendButton.tintColor = Qiscus.shared.styleConfiguration.color.topColor
         self.mediaCaption.chatInputDelegate = self
         self.mediaCaption.font = Qiscus.style.chatFont
-        self.mediaCaption.placeholder = QiscusTextConfiguration.sharedInstance.captionPlaceholder
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        if(preferredLanguage.range(of:"id") != nil){
+            self.mediaCaption.placeholder = QiscusTextConfiguration.sharedInstance.captionPlaceholderIN
+        }else{
+            self.mediaCaption.placeholder = QiscusTextConfiguration.sharedInstance.captionPlaceholder
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
