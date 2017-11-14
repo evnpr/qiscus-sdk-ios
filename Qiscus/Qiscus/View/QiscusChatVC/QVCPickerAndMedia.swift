@@ -11,6 +11,12 @@ import ImageViewer
 import AVFoundation
 import Photos
 
+enum ErrorUploadType {
+    case video
+    case image
+    case file
+}
+
 // MARK: - GaleryItemDataSource
 extension QiscusChatVC:GalleryItemsDatasource{
     
@@ -47,8 +53,17 @@ extension QiscusChatVC:GalleryItemsDatasource{
 }
 // MARK: - UIImagePickerDelegate
 extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func showFileTooBigAlert(){
-        let alertController = UIAlertController(title: "Fail to upload", message: "File too big", preferredStyle: .alert)
+    func showFileTooBigAlert(type: ErrorUploadType = .image){
+        var errorTitle  : String    = NSLocalizedString("Fail to upload", comment: "")
+        var errorBody   : String    = NSLocalizedString("File too big", comment: "")
+        
+        if type == .image {
+            errorBody   = NSLocalizedString("File too big \n ", comment: "")
+        }else if type == .video {
+            errorBody   = NSLocalizedString("File too big \n ", comment: "")
+        }
+        
+        let alertController = UIAlertController(title: errorTitle, message: errorBody, preferredStyle: .alert)
         let galeryActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ -> Void in }
         alertController.addAction(galeryActionButton)
         self.present(alertController, animated: true, completion: nil)
