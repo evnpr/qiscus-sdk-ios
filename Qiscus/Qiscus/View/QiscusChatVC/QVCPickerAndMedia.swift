@@ -134,7 +134,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
     //                cancelAction: {}
     //                )
                     let mediaSize = Double(data!.count) / 1024.0
-                    if mediaSize > Qiscus.maxUploadSizeInKB {
+                    if mediaSize > Qiscus.maxUploadImageSize {
                         picker.dismiss(animated: true, completion: {
                             self.processingFile = false
                             self.showFileTooBigAlert()
@@ -159,7 +159,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                 
                 let mediaData = try? Data(contentsOf: mediaURL)
                 let mediaSize = Double(mediaData!.count) / 1024.0
-                if mediaSize > Qiscus.maxUploadSizeInKB {
+                if mediaSize > Qiscus.maxUploadVideoSize {
                     picker.dismiss(animated: true, completion: {
                         self.processingFile = false
                         self.showFileTooBigAlert()
