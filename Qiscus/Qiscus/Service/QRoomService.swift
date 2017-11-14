@@ -38,7 +38,7 @@ public class QRoomService:NSObject{
                     let commentPayload = results["comments"].arrayValue
                     for json in commentPayload {
                         let commentId = json["id"].intValue
-                        
+                        print("[QISCUS QRoomService 41] json =\(json)")
                         if commentId <= QiscusMe.sharedInstance.lastCommentId {
                             room.saveOldComment(fromJSON: json)
                         }else{

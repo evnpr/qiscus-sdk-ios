@@ -40,11 +40,11 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     
     public static var chatDelegate:QiscusChatDelegate?
-    /// maximum upload File(exmp: iCloud) fileSize in KB, default is 100KB
+    /// maximum upload File(exmp: iCloud) fileSize in KB or KiloByte, default is 100KB
     public static var maxUploadSizeInKB:Double = Double(100) * Double(1024)
-    /// maximum upload video fileSize in KB, default is 100KB
+    /// maximum upload video fileSize in KB or KiloByte, default is 100KB
     public static var maxUploadVideoSize:Double = Double(100) * Double(1024)
-    /// maximum upload image fileSize in KB, default is 100KB
+    /// maximum upload image fileSize in KB or KiloByte, default is 100KB
     public static var maxUploadImageSize:Double = Double(100) * Double(1024)
     
     static var realtimeConnected:Bool = false

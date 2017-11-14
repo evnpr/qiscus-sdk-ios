@@ -68,8 +68,9 @@ public class QPopUpView: UIViewController {
         let parentView = self.view
         parentView!.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
         
-        self.topColor = Qiscus.shared.styleConfiguration.color.topColor
-        self.bottomColor = Qiscus.shared.styleConfiguration.color.bottomColor
+        self.topColor = UIColor.white//Qiscus.shared.styleConfiguration.color.topColor
+        self.bottomColor = UIColor.white //Qiscus.shared.styleConfiguration.color.bottomColor
+        
         
         if self.image != nil {
             self.imageView.image = self.image
@@ -97,6 +98,11 @@ public class QPopUpView: UIViewController {
         self.firstButton.verticalGradientColor(topColor, bottomColor: bottomColor)
         self.secondButton.verticalGradientColor(topColor, bottomColor: bottomColor)
         self.singleButton.verticalGradientColor(topColor, bottomColor: bottomColor)
+        
+        self.firstButton.addTopBorderWithColor(color: UIColor.lightGray, width: 0.3)
+        self.secondButton.addTopBorderWithColor(color: UIColor.lightGray, width: 0.3)
+        self.firstButton.addRightBorderWithColor(color: UIColor.lightGray, width: 0.3)
+        self.singleButton.addTopBorderWithColor(color: UIColor.lightGray, width: 0.3)
         
         if oneButton {
             self.firstButton.isHidden = true
@@ -166,4 +172,34 @@ public class QPopUpView: UIViewController {
         alert.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
         UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: {})
     }
+}
+
+extension UIView {
+func addTopBorderWithColor(color: UIColor, width: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color.cgColor
+    border.frame = CGRect(x:0,y: 0, width:self.frame.size.width, height:width)
+    self.layer.addSublayer(border)
+}
+
+func addRightBorderWithColor(color: UIColor, width: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color.cgColor
+    border.frame = CGRect(x: self.frame.size.width,y: 0, width:width, height:self.frame.size.height)
+    self.layer.addSublayer(border)
+}
+
+func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color.cgColor
+    border.frame = CGRect(x:0, y:self.frame.size.height - width, width:self.frame.size.width, height:width)
+    self.layer.addSublayer(border)
+}
+
+func addLeftBorderWithColor(color: UIColor, width: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color.cgColor
+    border.frame = CGRect(x:0, y:0, width:width, height:self.frame.size.height)
+    self.layer.addSublayer(border)
+}
 }
