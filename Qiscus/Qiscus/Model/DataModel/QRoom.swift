@@ -522,6 +522,7 @@ public class QRoom:Object {
                         position = .middle
                     }
                     if comment.cellPos != position {
+                        print("[QISCUS QRoom 525] CellPostion =\(comment.cellPos) ::: position =\(position)")
                         comment.updateCellPos(cellPos: position)
                     }
                     i += 1
@@ -1110,6 +1111,7 @@ public class QRoom:Object {
                     }
                 }
                 else{
+                    print("[QISCUS QRoom 1114] newComment =\(newComment)")
                     self.addComment(newComment: newComment, onTop: true)
                 }
             }

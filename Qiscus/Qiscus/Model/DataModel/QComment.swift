@@ -209,6 +209,7 @@ public class QComment:Object {
     }
     public var cellPos:QCellPosition {
         get{
+            print("[QISCUS QComment] CellPostion =\(self.cellPosRaw)")
             return QCellPosition(rawValue: self.cellPosRaw)!
         }
     }
@@ -651,6 +652,7 @@ public class QComment:Object {
                 self.cellPosRaw = cellPos.rawValue
             }
             func execute(){
+                print("[QISCUS QComment 655] CellPostion =\(QComment.cache[uId]?.cellPos)")
                 QComment.cache[uId]?.delegate?.comment(didChangePosition: cellPos)
             }
             if Thread.isMainThread{

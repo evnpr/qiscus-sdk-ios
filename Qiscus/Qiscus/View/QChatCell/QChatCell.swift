@@ -164,7 +164,7 @@ class QChatCell: UICollectionViewCell, QCommentDelegate {
     public func getBallon()->UIImage?{
         var balloonImage:UIImage? = nil
         var edgeInset = UIEdgeInsetsMake(13, 0, 13, 0)
-        
+        print("[QISCUS QChatCell 167] CellPostion =\(self.comment!.cellPos)")
         switch self.comment!.cellPos {
         case .single, .last:
             if self.comment?.senderEmail == QiscusMe.sharedInstance.email {
