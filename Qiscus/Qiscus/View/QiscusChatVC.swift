@@ -410,7 +410,7 @@ open class QiscusChatVC: UIViewController{
         self.roomAvatarLabel.font = UIFont.boldSystemFont(ofSize: 25)
         self.roomAvatarLabel.textColor = UIColor.white
         self.roomAvatarLabel.backgroundColor = UIColor.clear
-        self.roomAvatarLabel.text = "Q"
+        //self.roomAvatarLabel.text = "Q"
         self.roomAvatarLabel.textAlignment = .center
         
         self.roomAvatar = UIImageView()
@@ -422,8 +422,9 @@ open class QiscusChatVC: UIViewController{
         self.roomAvatar.frame = CGRect(x: 0,y: 6,width: 32,height: 32)
         self.roomAvatar.layer.cornerRadius = 16
         self.roomAvatar.clipsToBounds = true
-        self.roomAvatar.backgroundColor = bgColor[0]
-        
+        //self.roomAvatar.backgroundColor = bgColor[0]
+        self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
+            
         self.titleView = UIView(frame: CGRect(x: 0, y: 0, width: (titleWidth + 40)/2, height: 44))
         self.titleView.addSubview(self.titleLabel)
         self.titleView.addSubview(self.subtitleLabel)

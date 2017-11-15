@@ -126,7 +126,7 @@ open class ChatInputText: UITextView, UITextViewDelegate {
         Qiscus.uiThread.async {
             autoreleasepool{
                 self.text = self.placeholder
-                self.textColor = self.placeHolderColor
+                self.textColor = self.activeTextColor
             }
         }
     }
