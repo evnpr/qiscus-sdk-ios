@@ -192,6 +192,7 @@ public class QRoomService:NSObject{
         }
     }
     public func postComment(onRoom roomId:String, comment:QComment, type:String? = nil, payload:JSON? = nil){
+        Qiscus.printLog(text: "Start postComment idRoom = \(roomId) ::: comment = \(comment.text)")
         var parameters:[String: AnyObject] = [String: AnyObject]()
         
         parameters = [
@@ -244,7 +245,7 @@ public class QRoomService:NSObject{
                         let commentBeforeId = commentJSON["comment_before_id"].intValue
                         
                         comment.update(commentId: commentId, beforeId: commentBeforeId)
-                        
+                        Qiscus.printLog(text: "Success postComment idRoom =\(roomId)")
                         if let room = QRoom.room(withId: roomId){
                             if comment.status == QCommentStatus.sending || comment.status == QCommentStatus.failed {
                                     room.updateCommentStatus(inComment: comment, status: .sent)
@@ -253,12 +254,14 @@ public class QRoomService:NSObject{
                         }
                     }else{
                         let status = QCommentStatus.failed
+                        Qiscus.printLog(text: "Failed postComment idRoom =\(roomId) ::: status =\(status)")
                         if let room = QRoom.room(withId: roomId){
                             room.updateCommentStatus(inComment: comment, status: status)
                         }
                     }
                 }else{
                     let status = QCommentStatus.failed
+                    Qiscus.printLog(text: "Failed postComment ")
                     if let room = QRoom.room(withId: roomId){
                         room.updateCommentStatus(inComment: comment, status: status)
                     }
@@ -272,7 +275,7 @@ public class QRoomService:NSObject{
                 if let room = QRoom.room(withId: roomId){
                     room.updateCommentStatus(inComment: comment, status: status)
                 }
-                Qiscus.printLog(text: "fail to post comment with error: \(error)")
+                Qiscus.printLog(text: "fail to post comment idRoom =\(roomId) with error: \(error)")
                 let delay = 2.0 * Double(NSEC_PER_SEC)
                 let time = DispatchTime.now() + delay / Double(NSEC_PER_SEC)
                 let commentTS = ThreadSafeReference(to: comment)

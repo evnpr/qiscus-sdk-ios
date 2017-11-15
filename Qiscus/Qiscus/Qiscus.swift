@@ -142,11 +142,13 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     
     class func disconnectRealtime(){
         Qiscus.uiThread.async { autoreleasepool{
+            Qiscus.printLog(text: "MQTT disconnect")
             Qiscus.sharedInstance.mqtt?.disconnect()
         }}
     }
     
     @objc public class func clear(){
+        Qiscus.printLog(text: "Clear Qiscus")
         Qiscus.clearData()
         Qiscus.publishUserStatus(offline: true)
         Qiscus.shared.mqtt?.disconnect()
@@ -189,6 +191,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     }
     func checkChat(){
         if Qiscus.isLoggedIn{
+            Qiscus.printLog(text: "checkChat MQTT connect")
             Qiscus.mqttConnect(chatOnly: true)
         }
     }
@@ -201,6 +204,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         center.addObserver(self, selector: #selector(Qiscus.goToBackgroundMode), name: .UIApplicationDidEnterBackground, object: nil)
         
         if Qiscus.isLoggedIn {
+            Qiscus.printLog(text: "RealtimeConnect MQTT connect")
             Qiscus.mqttConnect()
         }
     }

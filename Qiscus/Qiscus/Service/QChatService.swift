@@ -731,6 +731,8 @@ public class QChatService:NSObject {
         load(onPage: 1)
     }
     @objc internal func syncProcess(first:Bool = true, cloud:Bool = false){
+        var unixId  = NSDate().timeIntervalSince1970
+        Qiscus.printLog(text: "start sync process call \(unixId)")
         QiscusRequestThread.async {
             let loadURL = QiscusConfig.SYNC_URL
             let limit = 60
@@ -759,6 +761,7 @@ public class QChatService:NSObject {
                             if comments.count > 0 {
                                 for newComment in comments.reversed() {
                                     let roomId = "\(newComment["room_id"])"
+                                    Qiscus.printLog(text: "Syncing process :::\(unixId)::: roomId =\(roomId)")
                                     let id = newComment["id"].intValue
                                     let type = newComment["type"].string
                                     if id > QiscusMe.sharedInstance.lastCommentId {
@@ -800,7 +803,7 @@ public class QChatService:NSObject {
                                                         Qiscus.chatDelegate?.qiscusChat?(gotNewRoom: room)
                                                         QiscusNotification.publish(gotNewRoom: room)
                                                     }, onFailed: { (error) in
-                                                        Qiscus.printLog(text:"error getting room info")
+                                                        Qiscus.printLog(text:"error getting room info withID \(roomId)")
                                                     })
                                                 }
                                             }
@@ -818,7 +821,7 @@ public class QChatService:NSObject {
                             if comments.count == limit {
                                 self.sync(first: false, cloud: cloud)
                             }else{
-                                Qiscus.printLog(text: "finish syncing process.")
+                                Qiscus.printLog(text: "finish syncing process. \(unixId)")
                                 if cloud {
                                     QiscusNotification.publish(finishedCloudSync: true)
                                 }
@@ -838,7 +841,7 @@ public class QChatService:NSObject {
                             }
                         }
                     }else if error != JSON.null{
-                        Qiscus.printLog(text: "error sync message: \(error)")
+                        Qiscus.printLog(text: "error sync \(unixId) message: \(error) ")
                         Qiscus.shared.delegate?.qiscus?(finishSync: false, error: "\(error)")
                         if cloud {
                             QiscusNotification.publish(errorCloudSync: "\(error)")
@@ -847,9 +850,9 @@ public class QChatService:NSObject {
                 }
                 else{
                     Qiscus.shared.delegate?.qiscus?(finishSync: false, error: "error sync message")
-                    Qiscus.printLog(text: "error sync message")
+                    Qiscus.printLog(text: "error sync \(unixId) message ")
                     if cloud {
-                        QiscusNotification.publish(errorCloudSync: "error sync message")
+                        QiscusNotification.publish(errorCloudSync: "error \(unixId) sync message")
                     }
                 }
             })
