@@ -439,7 +439,7 @@ open class QiscusChatVC: UIViewController{
     // MARK: - UI Lifecycle
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
+        Qiscus.printLog(text: "start open chat")
     }
     private func firstLoadSetup(){
         self.chatService.delegate = self
@@ -597,6 +597,7 @@ open class QiscusChatVC: UIViewController{
         
         self.isPresence = true
         self.firstLoad = false
+        Qiscus.printLog(text: "finish open chat")
     }
     
     // MARK: - Memory Warning
@@ -882,6 +883,7 @@ open class QiscusChatVC: UIViewController{
 
 extension QiscusChatVC:QChatServiceDelegate{
     public func chatService(didFinishLoadRoom inRoom: QRoom, withMessage message: String?) {
+        Qiscus.printLog(text: "finish load room \(inRoom.name)")
         self.chatRoom = inRoom
         self.chatRoom?.delegate = self
         self.loadRoomView()
@@ -897,6 +899,7 @@ extension QiscusChatVC:QChatServiceDelegate{
         }
     }
     public func chatService(didFailLoadRoom error: String) {
+        Qiscus.printLog(text: "failed load room : \n \(error)")
         let delay = 1.5 * Double(NSEC_PER_SEC)
         let time = DispatchTime.now() + delay / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: time, execute: {

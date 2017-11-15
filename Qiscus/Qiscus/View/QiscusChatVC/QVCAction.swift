@@ -915,14 +915,18 @@ extension QiscusChatVC {
     }
     // MARK: - Load DataSource on firstTime
     func loadData(){
+        
         if self.chatRoomId != nil {
+            Qiscus.printLog(text: "start load room with id \(self.chatRoomId!)")
             self.chatService.room(withId: self.chatRoomId!, withMessage: self.chatMessage)
         }else if self.chatUser != nil {
+            Qiscus.printLog(text: "start load room with user \(self.chatUser!)")
             self.chatService.room(withUser: self.chatUser!, distincId: self.chatDistinctId, optionalData: self.chatData, withMessage: self.chatMessage)
         }else if self.chatNewRoomUsers.count > 0 {
-            
+            Qiscus.printLog(text: "start load room with title \(self.chatTitle!)")
             self.chatService.createRoom(withUsers: self.chatNewRoomUsers, roomName: self.chatTitle!, optionalData: optionalData, withMessage: self.chatMessage)
         }else if self.chatRoomUniqueId != nil {
+            Qiscus.printLog(text: "start load room with uniqueId \(self.chatRoomUniqueId!)")
             self.chatService.room(withUniqueId: self.chatRoomUniqueId!, title: self.chatTitle!, avatarURL: self.chatAvatarURL, withMessage: self.chatMessage)
         }else {
             self.dismissLoading()
