@@ -464,30 +464,72 @@ extension QiscusChatVC {
     }
     func showPhotoAccessAlert(){
         DispatchQueue.main.async(execute: {
-            let text = QiscusTextConfiguration.sharedInstance.galeryAccessAlertText
-            let cancelTxt = QiscusTextConfiguration.sharedInstance.alertCancelText
-            let settingTxt = QiscusTextConfiguration.sharedInstance.alertSettingText
-            QPopUpView.showAlert(withTarget: self, message: text, firstActionTitle: settingTxt, secondActionTitle: cancelTxt,
-                                 doneAction: {
-                                    self.goToIPhoneSetting()
-            },
-                                 cancelAction: {}
-            )
+//            let text = QiscusTextConfiguration.sharedInstance.galeryAccessAlertText
+//            let cancelTxt = QiscusTextConfiguration.sharedInstance.alertCancelText
+//            let settingTxt = QiscusTextConfiguration.sharedInstance.alertSettingText
+//            QPopUpView.showAlert(withTarget: self, message: text, firstActionTitle: settingTxt, secondActionTitle: cancelTxt,
+//                                 doneAction: {
+//                                    self.goToIPhoneSetting()
+//            },
+//                                 cancelAction: {}
+//            )
+            self.showPermissionAlertForLibrary()
         })
     }
     func showCameraAccessAlert(){
         DispatchQueue.main.async(execute: {
-            let text = QiscusTextConfiguration.sharedInstance.cameraAccessAlertText
-            let cancelTxt = QiscusTextConfiguration.sharedInstance.alertCancelText
-            let settingTxt = QiscusTextConfiguration.sharedInstance.alertSettingText
-            QPopUpView.showAlert(withTarget: self, message: text, firstActionTitle: settingTxt, secondActionTitle: cancelTxt,
-                                 doneAction: {
-                                    self.goToIPhoneSetting()
-            },
-                                 cancelAction: {}
-            )
+//            let text = QiscusTextConfiguration.sharedInstance.cameraAccessAlertText
+//            let cancelTxt = QiscusTextConfiguration.sharedInstance.alertCancelText
+//            let settingTxt = QiscusTextConfiguration.sharedInstance.alertSettingText
+            
+//            QPopUpView.showAlert(withTarget: self, message: text, firstActionTitle: settingTxt, secondActionTitle: cancelTxt,
+//                                 doneAction: {
+//                                    self.goToIPhoneSetting()
+//            },
+//                                 cancelAction: {}
+//            )
+            
+            self.showPermissionAlertForCamera()
+            
         })
     }
+    
+    func showPermissionAlertForLibrary(){
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        if(preferredLanguage.range(of:"id") != nil){
+            showMessageWithSettingsLink(title: "Tidak bisa akses Foto", message: "Mohon berikan Halodoc akses ke Foto kamu di\nSetelan > Privasi > Foto")
+        }else{
+            showMessageWithSettingsLink(title: "Couldn't access Photos", message: "Please allow Halodoc to access your photos by going to\nSettings > Privacy > Photo")
+        }
+        
+        
+    }
+    
+    func showPermissionAlertForCamera(){
+        let preferredLanguage = NSLocale.preferredLanguages[0]
+        if(preferredLanguage.range(of:"id") != nil){
+            showMessageWithSettingsLink(title: "Tidak bisa akses Kamera", message: "Mohon berikan Halodoc akses ke kamera kamu di\nSetelan > Privasi > Kamera")
+        }else{
+            showMessageWithSettingsLink(title: "Couldn't access Camera", message: "Please allow Halodoc to access your camera by going to\nSettings > Privacy > Camera")
+        }
+        
+    }
+    
+    func showMessageWithSettingsLink(title:String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertController.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { action in
+            let url = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(url!)
+        }))
+        
+        let dismissAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+        }
+        
+        alertController.addAction(dismissAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func showMicrophoneAccessAlert(){
         DispatchQueue.main.async(execute: {
             let text = QiscusTextConfiguration.sharedInstance.microphoneAccessAlertText
