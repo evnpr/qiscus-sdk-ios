@@ -377,7 +377,7 @@ extension QiscusChatVC {
                                 if participant.email != QiscusMe.sharedInstance.email{
                                     if let user = participant.user{
                                         if user.lastSeen == Double(0){
-                                            subtitleString = "Offline"
+                                            subtitleString = "Online"
                                         }else{
                                             print("user.lastSeenString =\(user.lastSeenString)")
                                             if user.lastSeenString == "Online" {
