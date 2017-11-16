@@ -60,7 +60,7 @@ open class QiscusChatVC: UIViewController{
     public var subtitleLabel = UILabel()
     var roomAvatarImage:UIImage?
     public var roomAvatar = UIImageView()
-    var roomAvatarLabel = UILabel()
+    public var roomAvatarLabel = UILabel()
     public var titleView = UIView()
     
     var isBeforeTranslucent = false
