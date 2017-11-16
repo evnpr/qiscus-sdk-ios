@@ -27,6 +27,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     static let qiscusVersionNumber:String = "2.6.0"
     
     public static var showDebugPrint = false
+    public static var saveLog:Bool = false
     
     // MARK: - Thread
     static let uiThread = DispatchQueue.main
@@ -154,9 +155,9 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         Qiscus.shared.mqtt?.disconnect()
         Qiscus.unRegisterPN()
         QiscusMe.clear()
+        Qiscus.removeLogFile()
     }
     @objc public class func clearData(){
-        
         Qiscus.cancellAllRequest()
         Qiscus.removeAllFile()
         let realm = try! Realm(configuration: Qiscus.dbConfiguration)
@@ -172,6 +173,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         Qiscus.shared.chatViews = [String:QiscusChatVC]()
         Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
         Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
+        Qiscus.realtimeChannel = [String]()
     }
     @objc public class func unRegisterPN(){
         if Qiscus.isLoggedIn {
@@ -181,12 +183,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     // need Documentation
     func backgroundCheck(cloud:Bool = false){
         if Qiscus.isLoggedIn{
-            QChatService.sync(cloud: cloud)
-//            QiscusBackgroundThread.async { autoreleasepool{
-//                if !Qiscus.realtimeConnected {
-//                    Qiscus.mqttConnect()
-//                }
-//            }}
+            QChatService.syncProcess(cloud: cloud)
         }
     }
     func checkChat(){
@@ -214,7 +211,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         if delegate != nil {
             Qiscus.shared.delegate = delegate
         }
-        QChatService.sync()
+        QChatService.syncProcess()
     }
     @objc public class func setBaseURL(withURL url:String){
         QiscusMe.sharedInstance.baseUrl = url
@@ -616,15 +613,34 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
             
         }
         Qiscus.connect()
-        
         Qiscus.sync(cloud: true)
     }
-    class func printLog(text:String){
+    public class func printLog(text:String){
         if Qiscus.showDebugPrint{
-            DispatchQueue.global().async{
-                print("[Qiscus]: \(text)")
+            let logText = "[Qiscus]: \(text)"
+            DispatchQueue.global().sync{
+                if Qiscus.saveLog {
+                    let date = Date()
+                    let df = DateFormatter()
+                    df.dateFormat = "y-MM-dd H:m:ss"
+                    let dateTime = df.string(from: date)
+                    
+                    let logFileText = "[Qiscus - \(dateTime)] : \(text)"
+                    let logFilePath = Qiscus.logFile()
+                    var dump = ""
+                    if FileManager.default.fileExists(atPath: logFilePath) {
+                        dump =  try! String(contentsOfFile: logFilePath, encoding: String.Encoding.utf8)
+                    }
+                    do {
+                        // Write to the file
+                        try  "\(dump)\n\(logFileText)".write(toFile: logFilePath, atomically: true, encoding: String.Encoding.utf8)
+                    } catch let error as NSError {
+                        print("Failed writing to log file: \(logFilePath), Error: " + error.localizedDescription)
+                    }
+                }
+                print(logText)
             }
-            Qiscus.shared.diagnosticDelegate?.qiscusDiagnostic(sendLog: "[Qiscus]: \(text)")
+            Qiscus.shared.diagnosticDelegate?.qiscusDiagnostic(sendLog: logText)
         }
     }
     
@@ -756,7 +772,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
             if userInfo["qiscus_sdk"] != nil {
                 let state = Qiscus.shared.application.applicationState
                 if state != .active {
-                    QChatService.sync()
+                    QChatService.syncProcess()
                     if let payloadData = userInfo["payload"]{
                         let jsonPayload = JSON(arrayLiteral: payloadData)[0]
                         let tempComment = QComment.tempComment(fromJSON: jsonPayload)
@@ -993,8 +1009,7 @@ extension Qiscus:CocoaMQTTDelegate{
                     let commentId = json["id"].intValue
                     if commentId > QiscusMe.sharedInstance.lastCommentId {
                         func syncData(){
-                            let service = QChatService()
-                            service.syncProcess()
+                            QChatService.syncProcess()
                         }
                         let commentType = json["type"].stringValue
                         if commentType == "system_event" {
@@ -1147,8 +1162,8 @@ extension Qiscus:CocoaMQTTDelegate{
         
     }
     public func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String){
-        Qiscus.printLog(text: "realtime channel : \(topic) subscribed")
         if !Qiscus.realtimeChannel.contains(topic) {
+            Qiscus.printLog(text: "new realtime channel : \(topic) subscribed")
             Qiscus.realtimeChannel.append(topic)
         }
     }
@@ -1172,7 +1187,7 @@ extension Qiscus:CocoaMQTTDelegate{
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?){
         if Qiscus.isLoggedIn {
             Qiscus.realtimeConnected = false
-            self.sync()
+            Qiscus.sync()
 //            if let timer = self.syncTimer {
 //                timer.invalidate()
 //            }
@@ -1180,11 +1195,16 @@ extension Qiscus:CocoaMQTTDelegate{
         }
     }
     
-    @objc public func sync(){
-        self.backgroundCheck()
-    }
+//    @objc public func sync(){
+//        if Qiscus.isLoggedIn{
+//
+//        }
+//        self.backgroundCheck()
+//    }
     public class func sync(cloud:Bool = false){
-        Qiscus.sharedInstance.backgroundCheck(cloud: cloud)
+        if Qiscus.isLoggedIn{
+            QChatService.syncProcess(cloud: cloud)
+        }
     }
     
     func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
@@ -1228,7 +1248,7 @@ extension Qiscus:CocoaMQTTDelegate{
             for room in rooms {
                 room.subscribeRealtimeStatus()
             }
-            }}
+        }}
     }
 }
 
@@ -1411,6 +1431,23 @@ extension Qiscus { // Public class API to get room
             } catch {
                 Qiscus.printLog(text: "Could not clear Qiscus folder: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    internal class func logFile()->String{
+        let filemanager = FileManager.default
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as NSString
+        let logPath = documentsPath.appendingPathComponent("Qiscus.log")
+        return logPath
+    }
+    
+    public class func removeLogFile(){
+        let filemanager = FileManager.default
+        let logFilePath = Qiscus.logFile()
+        do {
+            try filemanager.removeItem(atPath: logFilePath)
+        } catch {
+            Qiscus.printLog(text: "Could not clear Qiscus folder: \(error.localizedDescription)")
         }
     }
 }
