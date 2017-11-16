@@ -255,7 +255,7 @@ extension QiscusChatVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         var size = comment.textSize
         let firstInSection = indexPath.row == 0
         
-        size.width = QiscusHelper.screenWidth() - 16
+        size.width = QiscusHelper.screenWidth() - 35
         size.height = self.qiscusChatView(cellHeightForComment: comment, defaultHeight: size.height, firstInSection: firstInSection)
         
         return size
