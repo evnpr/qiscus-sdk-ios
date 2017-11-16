@@ -302,7 +302,8 @@ extension QiscusChatVC {
                         let index = room.name.index(room.name.startIndex, offsetBy: 0)
                         self.roomAvatarLabel.text = String(room.name[index]).uppercased()
                         let colorIndex = room.name.count % bgColor.count
-                        self.roomAvatar.backgroundColor = bgColor[colorIndex]
+                        //self.roomAvatar.backgroundColor = bgColor[colorIndex]
+                        self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
                         if QFileManager.isFileExist(inLocalPath: room.avatarLocalPath){
                             self.roomAvatar.loadAsync(fromLocalPath: room.avatarLocalPath, onLoaded: { (image, _) in
                                 self.roomAvatarImage = image
@@ -330,7 +331,8 @@ extension QiscusChatVC {
                     self.roomAvatarLabel.text = String(self.chatTitle![index]).uppercased()
                 }
                 let colorIndex = self.chatTitle!.count % bgColor.count
-                self.roomAvatar.backgroundColor = bgColor[colorIndex]
+               // self.roomAvatar.backgroundColor = bgColor[colorIndex]
+                self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
                 if let room = self.chatRoom {
                     if self.roomAvatarImage == nil {
                         if QFileManager.isFileExist(inLocalPath: room.avatarLocalPath){

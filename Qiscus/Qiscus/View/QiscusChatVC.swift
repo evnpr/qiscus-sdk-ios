@@ -647,7 +647,8 @@ open class QiscusChatVC: UIViewController{
                 self.roomAvatarLabel.text = String(roomTitle[index]).uppercased()
                 //self.roomAvatarLabel.text = String(roomTitle.characters.first!).uppercased()
                 let colorIndex = roomTitle.count % bgColor.count
-                self.roomAvatar.backgroundColor = bgColor[colorIndex]
+                //self.roomAvatar.backgroundColor = bgColor[colorIndex]
+                self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
             }
             self.titleLabel.text = self.chatTitle
         }
