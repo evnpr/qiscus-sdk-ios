@@ -126,7 +126,7 @@ public class QRoomService:NSObject{
                         let error = json["error"]
                         
                         if results != JSON.null{
-                            Qiscus.printLog(text: "getListComment with user response: \(responseData)")
+                            Qiscus.printLog(text: "getListComment with user response: \(results)")
                             let changed = json["results"]["changed"].boolValue
                             if changed {
                                 if let name = roomName{

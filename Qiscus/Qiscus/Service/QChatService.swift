@@ -143,10 +143,11 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
+
                                 func execute(){
                                     let room = QRoom.addRoom(fromJSON: roomData)
                                     for json in commentPayload {
@@ -252,7 +253,7 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
@@ -345,7 +346,7 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
@@ -448,7 +449,7 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
@@ -563,7 +564,7 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 
@@ -659,7 +660,7 @@ public class QChatService:NSObject {
                             let error = json["error"]
                             
                             if results != JSON.null{
-                                Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                                Qiscus.printLog(text: "getListComment with id response: \(results)")
                                 let roomData = results["room"]
                                 let commentPayload = results["comments"].arrayValue
                                 func saveRoom(){
@@ -904,7 +905,7 @@ public class QChatService:NSObject {
                         let error = json["error"]
                         
                         if results != JSON.null{
-                            Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                            Qiscus.printLog(text: "getListComment with id response: \(results)")
                             let roomData = results["room"]
                             let commentPayload = results["comments"].arrayValue
                             
@@ -994,7 +995,7 @@ public class QChatService:NSObject {
                         let error = json["error"]
                         
                         if results != JSON.null{
-                            Qiscus.printLog(text: "getListComment with id response: \(responseData)")
+                            Qiscus.printLog(text: "getListComment with id response: \(results)")
                             let roomData = results["room"]
                             let commentPayload = results["comments"].arrayValue
                             
@@ -1050,15 +1051,16 @@ public class QChatService:NSObject {
                 "device_token" : deviceToken as AnyObject,
                 "device_platform" : "ios" as AnyObject
             ]
-            
             Qiscus.printLog(text: "registerDevice url: \(QiscusConfig.SET_DEVICE_TOKEN_URL)")
             Qiscus.printLog(text: "post parameters: \(parameters)")
             
             QiscusService.session.request(QiscusConfig.SET_DEVICE_TOKEN_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
                 Qiscus.printLog(text: "registerDevice result: \(response)")
+                
                 Qiscus.printLog(text: "registerDevice url: \(QiscusConfig.LOGIN_REGISTER)")
                 Qiscus.printLog(text: "registerDevice parameters: \(parameters)")
                 Qiscus.printLog(text: "registerDevice headers: \(QiscusConfig.sharedInstance.requestHeader)")
+               
                 switch response.result {
                 case .success:
                     if let result = response.result.value{
@@ -1547,6 +1549,7 @@ public class QChatService:NSObject {
                 "room_unique_id" : uniqueIds as AnyObject,
                 "show_participants": false as AnyObject
             ]
+            
             Qiscus.printLog(text: "rooms info url: \(QiscusConfig.SEARCH_URL)")
             Qiscus.printLog(text: "rooms info parameters: \(parameters)")
             QiscusService.session.request(QiscusConfig.ROOMINFO_URL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: QiscusConfig.sharedInstance.requestHeader).responseJSON(completionHandler: { response in
