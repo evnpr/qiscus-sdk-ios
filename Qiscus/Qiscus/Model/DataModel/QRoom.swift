@@ -36,43 +36,43 @@ import AVFoundation
     func room(didChangeUnread lastReadCommentId:Int, unreadCount:Int)
 }
 public class QRoom:Object {
-    public dynamic var id:String = ""
-    public dynamic var uniqueId:String = ""
-    private dynamic var storedName:String = ""
-    private dynamic var definedname:String = ""
-    public dynamic var storedAvatarURL:String = ""
-    public dynamic var definedAvatarURL:String = ""
-    public dynamic var avatarLocalPath:String = ""
-    public dynamic var data:String = ""
-    public dynamic var distinctId:String = ""
-    public dynamic var typeRaw:Int = QRoomType.single.rawValue
-    public dynamic var singleUser:String = ""
-    public dynamic var typingUser:String = ""
-    public dynamic var lastReadCommentId: Int = 0
-    public dynamic var isLocked:Bool = false
+    @objc public dynamic var id:String = ""
+    @objc public dynamic var uniqueId:String = ""
+    @objc private dynamic var storedName:String = ""
+    @objc private dynamic var definedname:String = ""
+    @objc public dynamic var storedAvatarURL:String = ""
+    @objc public dynamic var definedAvatarURL:String = ""
+    @objc public dynamic var avatarLocalPath:String = ""
+    @objc public dynamic var data:String = ""
+    @objc public dynamic var distinctId:String = ""
+    @objc public dynamic var typeRaw:Int = QRoomType.single.rawValue
+    @objc public dynamic var singleUser:String = ""
+    @objc public dynamic var typingUser:String = ""
+    @objc public dynamic var lastReadCommentId: Int = 0
+    @objc public dynamic var isLocked:Bool = false
     
-    internal dynamic var unreadCommentCount:Int = 0
-    public dynamic var unreadCount:Int = 0
-    private dynamic var pinned:Double = 0
+    @objc internal dynamic var unreadCommentCount:Int = 0
+    @objc public dynamic var unreadCount:Int = 0
+    @objc private dynamic var pinned:Double = 0
     
     // MARK: - lastComment variable
-    private dynamic var lastCommentId:Int = 0
-    private dynamic var lastCommentText:String = ""
-    internal dynamic var lastCommentUniqueId: String = ""
-    private dynamic var lastCommentBeforeId:Int = 0
-    public dynamic var lastCommentCreatedAt: Double = 0
-    private dynamic var lastCommentSenderEmail:String = ""
-    private dynamic var lastCommentSenderName:String = ""
-    internal dynamic var lastCommentStatusRaw:Int = QCommentStatus.sending.rawValue
-    private dynamic var lastCommentTypeRaw:String = QCommentType.text.name()
-    private dynamic var lastCommentData:String = ""
-    private dynamic var lastCommentRawExtras:String = ""
+    @objc private dynamic var lastCommentId:Int = 0
+    @objc private dynamic var lastCommentText:String = ""
+    @objc internal dynamic var lastCommentUniqueId: String = ""
+    @objc private dynamic var lastCommentBeforeId:Int = 0
+    @objc public dynamic var lastCommentCreatedAt: Double = 0
+    @objc private dynamic var lastCommentSenderEmail:String = ""
+    @objc private dynamic var lastCommentSenderName:String = ""
+    @objc internal dynamic var lastCommentStatusRaw:Int = QCommentStatus.sending.rawValue
+    @objc private dynamic var lastCommentTypeRaw:String = QCommentType.text.name()
+    @objc private dynamic var lastCommentData:String = ""
+    @objc private dynamic var lastCommentRawExtras:String = ""
     
     
     // MARK: private method
-    private dynamic var lastParticipantsReadId:Int = 0
-    private dynamic var lastParticipantsDeliveredId:Int = 0
-    private dynamic var roomVersion006:Bool = true
+    @objc private dynamic var lastParticipantsReadId:Int = 0
+    @objc private dynamic var lastParticipantsDeliveredId:Int = 0
+    @objc private dynamic var roomVersion006:Bool = true
     
     public let comments = List<QCommentGroup>()
     public let participants = List<QParticipant>()
@@ -409,7 +409,7 @@ public class QRoom:Object {
                 var index = 0
                 for participant in room.participants{
                     if !participantString.contains(participant.email){
-                        room.participants.remove(objectAtIndex: index)
+                        room.participants.remove(at: index)
                     }
                     index += 1
                 }
@@ -845,7 +845,7 @@ public class QRoom:Object {
             for participant in self.participants{
                 if !participantString.contains(participant.email){
                     try! realm.write {
-                        self.participants.remove(objectAtIndex: index)
+                        self.participants.remove(at: index)
                     }
                     participantChanged = true
                 }
@@ -1455,7 +1455,7 @@ public class QRoom:Object {
             }
         }
     }
-    public func clearUserTyping(){
+    @objc public func clearUserTyping(){
         if !self.isInvalidated {
             self.updateUserTyping(userEmail: "")
         }
@@ -1658,7 +1658,7 @@ public class QRoom:Object {
         let service = QRoomService()
         service.updateRoom(onRoom: self, roomName: roomName, roomAvatarURL: roomAvatarURL, roomOptions: roomOptions, onSuccess: onSuccess, onError: onError)
     }
-    public func publishStopTyping(){
+    @objc public func publishStopTyping(){
         let roomId = self.id
         QiscusBackgroundThread.async { autoreleasepool{
             let message: String = "0";

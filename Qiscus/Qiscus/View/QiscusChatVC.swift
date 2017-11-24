@@ -82,7 +82,7 @@ open class QiscusChatVC: UIViewController{
     public var defaultBack:Bool = true
     
     // MARK: - Data Properties
-    var hasMoreComment = true // rmove
+    @objc var hasMoreComment = true // rmove
     var loadMoreControl = UIRefreshControl()
     var processingFile = false
     var processingAudio = false
@@ -129,9 +129,9 @@ open class QiscusChatVC: UIViewController{
     var roomId:Int? // will be removed
     var distincId:String = "" // will be removed
     var optionalData:String? // will be removed
-    var message:String? // will be removed
+    var message:String? // will be@objc  removed
     var newRoom = false // will be removed
-    var uniqueId = "" // will be removed
+    var uniqueId = "" // will b@objc e removed
     var avatarURL = "" // will be removed
     var roomTitle = "" // will be removed
     
@@ -417,7 +417,7 @@ open class QiscusChatVC: UIViewController{
         self.roomAvatar.contentMode = .scaleAspectFill
         self.roomAvatar.backgroundColor = UIColor.white
         
-        let bgColor = QiscusColorConfiguration.sharedInstance.avatarBackgroundColor
+        _ = QiscusColorConfiguration.sharedInstance.avatarBackgroundColor
         
         self.roomAvatar.frame = CGRect(x: 0,y: 6,width: 32,height: 32)
         self.roomAvatar.layer.cornerRadius = 16
@@ -646,7 +646,7 @@ open class QiscusChatVC: UIViewController{
                 let index = roomTitle.index(roomTitle.startIndex, offsetBy: 0)
                 self.roomAvatarLabel.text = String(roomTitle[index]).uppercased()
                 //self.roomAvatarLabel.text = String(roomTitle.characters.first!).uppercased()
-                let colorIndex = roomTitle.count % bgColor.count
+                _ = roomTitle.count % bgColor.count
                 //self.roomAvatar.backgroundColor = bgColor[colorIndex]
                 self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
             }
@@ -665,7 +665,7 @@ open class QiscusChatVC: UIViewController{
     }
     
     // MARK: - Keyboard Methode
-    func keyboardWillHide(_ notification: Notification){
+    @objc func keyboardWillHide(_ notification: Notification){
         let info: NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         let animateDuration = info[UIKeyboardAnimationDurationUserInfoKey] as! Double
@@ -678,7 +678,7 @@ open class QiscusChatVC: UIViewController{
             }
         }, completion: nil)
     }
-    func keyboardChange(_ notification: Notification){
+    @objc func keyboardChange(_ notification: Notification){
         let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
@@ -700,7 +700,7 @@ open class QiscusChatVC: UIViewController{
     }
     func righRightButtonAction(_ sender: AnyObject) {
     }
-    func goBack() {
+    @objc func goBack() {
         self.isPresence = false
         view.endEditing(true)
         if let room = self.chatRoom {
@@ -718,7 +718,7 @@ open class QiscusChatVC: UIViewController{
     }
     
     // MARK: - Button Action
-    func appDidEnterBackground(){
+    @objc func appDidEnterBackground(){
         self.isPresence = false
         view.endEditing(true)
         self.dismissLoading()

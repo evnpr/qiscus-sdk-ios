@@ -19,22 +19,22 @@ import RealmSwift
 public class QUser:Object {
     static var cache = [String: QUser]()
     
-    public dynamic var email:String = ""
-    public dynamic var id:Int = 0
-    public dynamic var avatarURL:String = ""
-    public dynamic var avatarLocalPath:String = ""
-    public dynamic var storedName:String = ""
-    public dynamic var definedName:String = ""
-    public dynamic var lastSeen:Double = 0
+    @objc public dynamic var email:String = ""
+    @objc public dynamic var id:Int = 0
+    @objc public dynamic var avatarURL:String = ""
+    @objc public dynamic var avatarLocalPath:String = ""
+    @objc public dynamic var storedName:String = ""
+    @objc public dynamic var definedName:String = ""
+    @objc public dynamic var lastSeen:Double = 0
     
-    public dynamic var fullname:String{
+    @objc public dynamic var fullname:String{
         if self.definedName != "" {
             return self.definedName
         }else{
             return self.storedName
         }
     }
-    public dynamic var avatar:UIImage?{
+    @objc public dynamic var avatar:UIImage?{
         didSet{
             let email = self.email
             let avatar = self.avatar

@@ -86,7 +86,7 @@ extension QiscusChatVC {
         }
         )
     }
-    func confirmUnlockChat(){
+    @objc func confirmUnlockChat(){
         self.unlockAction()
     }
     func showAlert(alert:UIAlertController){
@@ -301,7 +301,7 @@ extension QiscusChatVC {
                         let bgColor = QiscusColorConfiguration.sharedInstance.avatarBackgroundColor
                         let index = room.name.index(room.name.startIndex, offsetBy: 0)
                         self.roomAvatarLabel.text = String(room.name[index]).uppercased()
-                        let colorIndex = room.name.count % bgColor.count
+                        _ = room.name.count % bgColor.count
                         //self.roomAvatar.backgroundColor = bgColor[colorIndex]
                         self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
                         if QFileManager.isFileExist(inLocalPath: room.avatarLocalPath){
@@ -330,7 +330,7 @@ extension QiscusChatVC {
                     let index = self.chatTitle!.index(self.chatTitle!.startIndex, offsetBy: 0)
                     self.roomAvatarLabel.text = String(self.chatTitle![index]).uppercased()
                 }
-                let colorIndex = self.chatTitle!.count % bgColor.count
+                _ = self.chatTitle!.count % bgColor.count
                // self.roomAvatar.backgroundColor = bgColor[colorIndex]
                 self.roomAvatar.backgroundColor = UINavigationBar.appearance().barTintColor
                 if let room = self.chatRoom {
@@ -555,7 +555,7 @@ extension QiscusChatVC {
             self.present(picker, animated: true, completion: nil)
         })
     }
-    func goToTitleAction(){
+    @objc func goToTitleAction(){
         self.inputBarBottomMargin.constant = 0
         self.view.layoutIfNeeded()
         self.titleAction()
@@ -588,7 +588,7 @@ extension QiscusChatVC {
         self.emptyChatImage.tintColor = self.bottomColor
     }
     
-    func sendMessage(){
+    @objc func sendMessage(){
         //if Qiscus.shared.connected{
             if !self.isRecording {
                 let value = self.inputText.value.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -600,18 +600,25 @@ extension QiscusChatVC {
                         if let user = reply.sender{
                             senderName = user.fullname
                         }
-                        var payloadArray: [(String,Any)] = [
-                            ("replied_comment_sender_email",reply.senderEmail),
-                            ("replied_comment_id", reply.id),
-                            ("text", value),
-                            ("replied_comment_message", reply.text),
-                            ("replied_comment_sender_username", senderName),
-                            ("replied_comment_payload", reply.data)
-                        ]
+                        
+                        payload = JSON(dictionaryLiteral: ("replied_comment_sender_email",reply.senderEmail),
+                                       ("replied_comment_id", reply.id),
+                                       ("text", value),
+                                       ("replied_comment_message", reply.text),
+                                       ("replied_comment_sender_username", senderName),
+                                       ("replied_comment_payload", reply.data)
+                        )
+                        
                         if reply.type == .location || reply.type == .contact {
-                            payloadArray.append(("replied_comment_type",reply.typeRaw))
+                            payload = JSON(dictionaryLiteral: ("replied_comment_sender_email",reply.senderEmail),
+                                           ("replied_comment_id", reply.id),
+                                           ("text", value),
+                                           ("replied_comment_message", reply.text),
+                                           ("replied_comment_sender_username", senderName),
+                                           ("replied_comment_payload", reply.data),
+                                            ("replied_comment_type",reply.typeRaw)
+                            )
                         }
-                        payload = JSON(dictionaryLiteral: payloadArray)
                         type = .reply
                         self.replyData = nil
                     }
@@ -673,7 +680,7 @@ extension QiscusChatVC {
     func uploadFromCamera(){
         view.endEditing(true)
         //if Qiscus.sharedInstance.connected{
-            if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized
+            if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized
             {
                 DispatchQueue.main.async(execute: {
                     let picker = UIImagePickerController()
@@ -685,7 +692,7 @@ extension QiscusChatVC {
                     self.present(picker, animated: true, completion: nil)
                 })
             }else{
-                AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted :Bool) -> Void in
+                AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted :Bool) -> Void in
                     if granted {
                         let picker = UIImagePickerController()
                         picker.delegate = self
@@ -805,7 +812,7 @@ extension QiscusChatVC {
             }}
         }
     }
-    func updateTimer(){
+    @objc func updateTimer(){
         if let timerLabel = self.recordBackground.viewWithTag(543) as? UILabel {
             self.recordDuration += 1
             let minutes = Int(self.recordDuration / 60)
@@ -821,7 +828,7 @@ extension QiscusChatVC {
             timerLabel.text = "\(minutesString):\(secondsString)"
         }
     }
-    func updateAudioMeter(){
+    @objc func updateAudioMeter(){
         if let audioRecorder = self.recorder{
             audioRecorder.updateMeters()
             let normalizedValue:CGFloat = pow(10.0, CGFloat(audioRecorder.averagePower(forChannel: 0)) / 20)
@@ -872,7 +879,7 @@ extension QiscusChatVC {
             })
         }
     }
-    func cancelRecordVoice(){
+    @objc func cancelRecordVoice(){
         self.recordViewLeading.constant = 8
         Qiscus.uiThread.async { autoreleasepool{
             UIView.animate(withDuration: 0.5, animations: {
@@ -907,7 +914,7 @@ extension QiscusChatVC {
     }
     
     // MARK: - Load More Control
-    func loadMore(){
+    @objc func loadMore(){
         if let room = self.chatRoom {
             if room.commentsGroupCount > 0 {
                 let indexPath = IndexPath(item: 0, section: 0)

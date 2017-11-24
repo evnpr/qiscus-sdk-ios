@@ -23,11 +23,11 @@ s.resource_bundles = {
 
 s.platform      = :ios, "9.0"
 
-s.dependency 'Alamofire', '~> 4.5.1'
-s.dependency 'AlamofireImage', '~> 3.3.0'
-s.dependency 'RealmSwift', '~> 2.10.2'
-s.dependency 'SwiftyJSON', '~> 3.1.4'
-s.dependency 'ImageViewer', '4.0'
-s.dependency 'CocoaMQTT', '1.0.19'
+s.dependency 'Alamofire'
+s.dependency 'AlamofireImage'
+s.dependency 'RealmSwift'
+s.dependency 'SwiftyJSON'
+s.dependency 'ImageViewer'
+s.dependency 'CocoaMQTT'
 
 end

@@ -18,7 +18,7 @@ enum ErrorUploadType {
 }
 
 // MARK: - GaleryItemDataSource
-extension QiscusChatVC:GalleryItemsDatasource{
+extension QiscusChatVC:GalleryItemsDataSource{
     
     // MARK: - Galery Function
     public func galleryConfiguration()-> GalleryConfiguration{
@@ -59,8 +59,8 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
         var errorTitle  : String = "Fail to upload."
         var errorBody   : String = "File size too large."
         var cancel      : String = "Cancel"
-        var sizeImage   : Double = Qiscus.maxUploadImageSize/1024.0
-        var sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024.0
+        let sizeImage   : Double = Qiscus.maxUploadImageSize/1024.0
+        let sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024.0
         
         if type == .image {
             if(preferredLanguage.range(of:"id") != nil){
@@ -191,7 +191,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                 let mediaURL = info[UIImagePickerControllerMediaURL] as! URL
                 let fileName = mediaURL.lastPathComponent
                 let fileNameArr = fileName.split(separator: ".")
-                let fileExt:NSString = String(fileNameArr.last!).lowercased() as NSString
+                let _:NSString = String(fileNameArr.last!).lowercased() as NSString
                 
                 let mediaData = try? Data(contentsOf: mediaURL)
                 let mediaSize = Double(mediaData!.count) / 1024.0
@@ -382,7 +382,7 @@ extension QiscusChatVC:AVAudioPlayerDelegate{
     }
     
     // MARK: - Audio Methods
-    func audioTimerFired(_ timer: Timer) {
+    @objc func audioTimerFired(_ timer: Timer) {
         self.updateAudioDisplay()
     }
     
