@@ -23,11 +23,11 @@ extension QiscusChatVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         var sectionNumber = 0
         
         if let room = self.chatRoom {
-            if room.commentsGroupCount > 0 {
-                self.welcomeView.isHidden = true
-            }else{
-                self.welcomeView.isHidden = false
-            }
+//            if room.commentsGroupCount > 0 {
+//                self.welcomeView.isHidden = true
+//            }else{
+//                self.welcomeView.isHidden = false
+//            }
             sectionNumber = room.commentsGroupCount
         }
         return sectionNumber

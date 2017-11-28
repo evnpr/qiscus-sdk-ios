@@ -585,7 +585,7 @@ extension QiscusChatVC {
         self.bottomButton.tintColor = self.topColor
         self.recordButton.tintColor = self.topColor
         self.cancelRecordButton.tintColor = self.topColor
-        self.emptyChatImage.tintColor = self.bottomColor
+        //self.emptyChatImage.tintColor = self.bottomColor
     }
     
     @objc func sendMessage(){
@@ -961,7 +961,7 @@ extension QiscusChatVC {
         self.bottomButton.tintColor = self.topColor
         self.recordButton.tintColor = self.topColor
         self.cancelRecordButton.tintColor = self.topColor
-        self.emptyChatImage.tintColor = self.bottomColor
+        //self.emptyChatImage.tintColor = self.bottomColor
         
     }
     // MARK: - Load DataSource on firstTime

@@ -24,15 +24,15 @@ open class QiscusChatVC: UIViewController{
     @IBOutlet weak var inputBar: UIView!
     @IBOutlet public weak var backgroundView: UIImageView!
     @IBOutlet weak var inputText: ChatInputText!
-    @IBOutlet public weak var welcomeView: UIView!
-    @IBOutlet public weak var welcomeText: UILabel!
-    @IBOutlet public weak var welcomeSubtitle: UILabel!
+   // @IBOutlet public weak var welcomeView: UIView!
+   // @IBOutlet public weak var welcomeText: UILabel!
+   // @IBOutlet public weak var welcomeSubtitle: UILabel!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var attachButton: UIButton!
     @IBOutlet weak var archievedNotifView: UIView!
     @IBOutlet weak var archievedNotifLabel: UILabel!
     @IBOutlet weak var unlockButton: UIButton!
-    @IBOutlet weak var emptyChatImage: UIImageView!
+    //@IBOutlet weak var emptyChatImage: UIImageView!
     @IBOutlet public weak var collectionView: UICollectionView!
     @IBOutlet weak var bottomButton: UIButton!
     @IBOutlet weak var unreadIndicator: UILabel!
@@ -326,10 +326,10 @@ open class QiscusChatVC: UIViewController{
         inputText.font = Qiscus.style.chatFont
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.emptyChatImage.tintColor = self.topColor
+        //self.emptyChatImage.tintColor = self.topColor
         
-        self.emptyChatImage.image = QiscusAssetsConfiguration.shared.emptyChat
-        self.emptyChatImage.tintColor = self.bottomColor
+        //self.emptyChatImage.image = QiscusAssetsConfiguration.shared.emptyChat
+       // self.emptyChatImage.tintColor = self.bottomColor
         
         let sendImage = Qiscus.image(named: "ic_send")
         let attachmentImage = Qiscus.image(named: "ic_attachment")
@@ -357,9 +357,9 @@ open class QiscusChatVC: UIViewController{
         
         self.unlockButton.addTarget(self, action: #selector(QiscusChatVC.confirmUnlockChat), for: .touchUpInside)
         
-        self.welcomeText.text = QiscusTextConfiguration.sharedInstance.emptyTitle
-        self.welcomeSubtitle.text = QiscusTextConfiguration.sharedInstance.emptyMessage
-        self.emptyChatImage.image = Qiscus.style.assets.emptyChat
+        //self.welcomeText.text = QiscusTextConfiguration.sharedInstance.emptyTitle
+        //self.welcomeSubtitle.text = QiscusTextConfiguration.sharedInstance.emptyMessage
+        //self.emptyChatImage.image = Qiscus.style.assets.emptyChat
         let preferredLanguage = NSLocale.preferredLanguages[0]
         if(preferredLanguage.range(of:"id") != nil){
             self.inputText.placeholder = QiscusTextConfiguration.sharedInstance.textPlaceholderIN
