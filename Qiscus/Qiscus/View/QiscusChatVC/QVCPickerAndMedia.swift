@@ -99,6 +99,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
             
             if fileType == "public.image"{
                 var imageName:String = ""
+                
                 let image = info[UIImagePickerControllerOriginalImage] as! UIImage
                 var data = UIImagePNGRepresentation(image)
                 if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL{
@@ -110,8 +111,10 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                     let gif:Bool = (imageExt == "gif" || imageExt == "gif_")
                     let jpeg:Bool = (imageExt == "jpg" || imageExt == "jpg_")
                     let png:Bool = (imageExt == "png" || imageExt == "png_")
+                    let nef:Bool = (imageExt == "tif" || imageExt == "tif_")
                 
-                    if jpeg{
+                    if jpeg || nef{
+                        imageName = "\(timeToken).jpg"
                         let imageSize = image.size
                         var bigPart = CGFloat(0)
                         if(imageSize.width > imageSize.height){
