@@ -49,23 +49,23 @@
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                     </textView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Km2-gP-wdW">
-                                        <rect key="frame" x="-0.5" y="0.0" width="216" height="130"/>
+                                        <rect key="frame" x="10" y="0.0" width="216" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="Om5-9W-zGe"/>
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="movie_frame" translatesAutoresizingMaskIntoConstraints="NO" id="zch-0E-YLf">
-                                        <rect key="frame" x="-0.5" y="0.0" width="216" height="130"/>
+                                        <rect key="frame" x="10" y="0.0" width="216" height="130"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fdl-wE-vVk">
-                                        <rect key="frame" x="88" y="45" width="40" height="40"/>
+                                        <rect key="frame" x="98.5" y="45" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="pDg-od-X72"/>
                                             <constraint firstAttribute="height" constant="40" id="zVw-Lh-Gai"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEi-7i-IVN" customClass="ChatFileButton" customModule="Qiscus" customModuleProvider="target">
-                                        <rect key="frame" x="88" y="45" width="40" height="40"/>
+                                        <rect key="frame" x="98.5" y="45" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Cfy-no-SWZ"/>
                                             <constraint firstAttribute="width" constant="40" id="KXe-GL-SS7"/>
@@ -73,7 +73,7 @@
                                         <state key="normal" image="ic_download_chat"/>
                                     </button>
                                     <view clipsSubviews="YES" alpha="0.55000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nAE-GU-M7b">
-                                        <rect key="frame" x="88" y="45" width="40" height="40"/>
+                                        <rect key="frame" x="98.5" y="45" width="40" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a27-Is-ESA" userLabel="progressView">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -93,7 +93,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pl-iQ-IyF">
-                                        <rect key="frame" x="88" y="45" width="40" height="40"/>
+                                        <rect key="frame" x="98.5" y="45" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Drg-vs-aCx"/>
                                             <constraint firstAttribute="width" constant="40" id="yvV-Hy-NUJ"/>
@@ -119,7 +119,7 @@
                                     <constraint firstItem="zch-0E-YLf" firstAttribute="height" secondItem="Km2-gP-wdW" secondAttribute="height" id="f4O-m6-Gfl"/>
                                     <constraint firstItem="Fdl-wE-vVk" firstAttribute="centerY" secondItem="Km2-gP-wdW" secondAttribute="centerY" id="fLW-dq-be4"/>
                                     <constraint firstAttribute="height" secondItem="GB1-mo-hQE" secondAttribute="height" constant="140" id="lIq-at-AXp"/>
-                                    <constraint firstItem="Km2-gP-wdW" firstAttribute="centerX" secondItem="RBF-FQ-IiB" secondAttribute="centerX" id="ny2-hY-GHf"/>
+                                    <constraint firstItem="Km2-gP-wdW" firstAttribute="centerX" secondItem="RBF-FQ-IiB" secondAttribute="centerX" constant="10" id="ny2-hY-GHf"/>
                                     <constraint firstItem="ZEi-7i-IVN" firstAttribute="centerX" secondItem="Km2-gP-wdW" secondAttribute="centerX" id="qCW-Jw-oFi"/>
                                     <constraint firstItem="nAE-GU-M7b" firstAttribute="centerY" secondItem="Km2-gP-wdW" secondAttribute="centerY" id="sA0-aG-r1H"/>
                                     <constraint firstItem="Km2-gP-wdW" firstAttribute="top" secondItem="RBF-FQ-IiB" secondAttribute="top" id="tlV-hP-wbR"/>
