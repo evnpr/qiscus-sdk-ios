@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fMF-Uw-jWN">
-                                <rect key="frame" x="0.0" y="0.0" width="221" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="184" height="50"/>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0db-y1-yFM">
                                 <rect key="frame" x="0.0" y="-65" width="192" height="65"/>
@@ -97,7 +97,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DM-pr-Bgi">
-                                <rect key="frame" x="136" y="29" width="75" height="21"/>
+                                <rect key="frame" x="94" y="29" width="75" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Itk-x4-jLv"/>
                                     <constraint firstAttribute="width" constant="75" id="PZA-Gy-ind"/>
@@ -107,10 +107,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Halooo ...." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mbY-dm-Inu" customClass="QTextView" customModule="Qiscus" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="190" height="40"/>
+                                <rect key="frame" x="8" y="0.0" width="172" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="A4E-zp-ojY"/>
-                                    <constraint firstAttribute="width" constant="190" id="g6k-7I-yVn"/>
+                                    <constraint firstAttribute="width" constant="172" id="g6k-7I-yVn"/>
                                 </constraints>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -121,18 +121,18 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="top" secondItem="wLA-y9-TFo" secondAttribute="top" id="Afh-rP-y3Q"/>
-                            <constraint firstItem="0db-y1-yFM" firstAttribute="leading" secondItem="mbY-dm-Inu" secondAttribute="leading" id="EvX-FA-RYI"/>
-                            <constraint firstItem="mbY-dm-Inu" firstAttribute="leading" secondItem="fMF-Uw-jWN" secondAttribute="leading" id="JhE-xJ-LFV"/>
+                            <constraint firstItem="0db-y1-yFM" firstAttribute="leading" secondItem="mbY-dm-Inu" secondAttribute="leading" constant="-8" id="EvX-FA-RYI"/>
+                            <constraint firstItem="mbY-dm-Inu" firstAttribute="leading" secondItem="fMF-Uw-jWN" secondAttribute="leading" constant="8" id="JhE-xJ-LFV"/>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="leading" secondItem="wLA-y9-TFo" secondAttribute="leading" id="T2q-hK-ErK"/>
                             <constraint firstItem="3DM-pr-Bgi" firstAttribute="bottom" secondItem="fMF-Uw-jWN" secondAttribute="bottom" id="URs-jU-GXQ"/>
-                            <constraint firstItem="fMF-Uw-jWN" firstAttribute="width" secondItem="mbY-dm-Inu" secondAttribute="width" constant="31" id="XgA-oA-0j1"/>
-                            <constraint firstItem="ZMs-48-McT" firstAttribute="leading" secondItem="mbY-dm-Inu" secondAttribute="leading" id="Y7e-2e-6ma"/>
+                            <constraint firstItem="fMF-Uw-jWN" firstAttribute="width" secondItem="mbY-dm-Inu" secondAttribute="width" constant="12" id="XgA-oA-0j1"/>
+                            <constraint firstItem="ZMs-48-McT" firstAttribute="leading" secondItem="mbY-dm-Inu" secondAttribute="leading" constant="-8" id="Y7e-2e-6ma"/>
                             <constraint firstItem="ZMs-48-McT" firstAttribute="top" secondItem="wLA-y9-TFo" secondAttribute="top" id="ZSk-yf-bir"/>
                             <constraint firstItem="mbY-dm-Inu" firstAttribute="top" secondItem="fMF-Uw-jWN" secondAttribute="top" id="b51-YQ-fbx"/>
                             <constraint firstAttribute="height" secondItem="fMF-Uw-jWN" secondAttribute="height" id="cCu-kY-Szo"/>
                             <constraint firstItem="fMF-Uw-jWN" firstAttribute="height" secondItem="mbY-dm-Inu" secondAttribute="height" constant="10" id="oS9-sh-3WD"/>
                             <constraint firstItem="0db-y1-yFM" firstAttribute="bottom" secondItem="mbY-dm-Inu" secondAttribute="top" id="xue-yv-KGD"/>
-                            <constraint firstItem="3DM-pr-Bgi" firstAttribute="trailing" secondItem="fMF-Uw-jWN" secondAttribute="trailing" constant="-10" id="yvq-1d-b5a"/>
+                            <constraint firstItem="3DM-pr-Bgi" firstAttribute="trailing" secondItem="fMF-Uw-jWN" secondAttribute="trailing" constant="-15" id="yvq-1d-b5a"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="0.0" left="8" bottom="0.0" right="8"/>
                     </view>

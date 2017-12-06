@@ -226,7 +226,7 @@ class QCellTextRight: QChatCell {
         
         self.balloonView.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonColor
         self.dateLabel.text = self.comment!.time.lowercased()
-        self.dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+        self.dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         
         
         // first cell
@@ -250,7 +250,7 @@ class QCellTextRight: QChatCell {
     public override func updateStatus(toStatus status:QCommentStatus){
         switch status {
         case .sending, .pending:
-            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
             statusImage.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
             dateLabel.text = QiscusTextConfiguration.sharedInstance.sendingText
             if status == .pending {
@@ -260,19 +260,19 @@ class QCellTextRight: QChatCell {
             break
         case .sent:
             dateLabel.text = self.comment!.time.lowercased()
-            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
             statusImage.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
             statusImage.image = Qiscus.image(named: "ic_sending")?.withRenderingMode(.alwaysTemplate)
             break
         case .delivered:
             dateLabel.text = self.comment!.time.lowercased()
-            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
             statusImage.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
             statusImage.image = Qiscus.image(named: "ic_read")?.withRenderingMode(.alwaysTemplate)
             break
         case .read:
             dateLabel.text = self.comment!.time.lowercased()
-            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+            dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
             statusImage.tintColor = Qiscus.style.color.readMessageColor
             statusImage.image = Qiscus.image(named: "ic_read")?.withRenderingMode(.alwaysTemplate)
             break

@@ -238,7 +238,7 @@ class QCellTextLeft: QChatCell, UITextViewDelegate {
         
         self.dateLabel.text = self.comment!.time.lowercased()
         self.balloonView.tintColor = QiscusColorConfiguration.sharedInstance.leftBaloonColor
-        self.dateLabel.textColor = QiscusColorConfiguration.sharedInstance.leftBaloonTextColor
+        self.dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         
         
         if self.comment?.cellPos == .first || self.comment?.cellPos == .single{
