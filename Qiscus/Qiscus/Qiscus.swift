@@ -32,7 +32,20 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     static let uiThread = DispatchQueue.main
     
     static var qiscusDeviceToken: String = ""
-    static var dbConfiguration = Realm.Configuration.defaultConfiguration
+    static var dbConfiguration:Realm.Configuration {
+        get{
+            var r = Realm.Configuration.defaultConfiguration
+            var realmURL = r.fileURL!
+            realmURL.deleteLastPathComponent()
+            realmURL.appendPathComponent("Qiscus.realm")
+            r.fileURL = realmURL
+            r.deleteRealmIfMigrationNeeded = true
+            r.schemaVersion = Qiscus.shared.config.dbSchemaVersion
+            
+            return r
+        }
+    }
+    
     
     static var chatRooms = [String : QRoom]()
     static var qiscusDownload:[String] = [String]()
@@ -170,8 +183,8 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         QComment.cache = [String : QComment]()
         QUser.cache = [String: QUser]()
         Qiscus.shared.chatViews = [String:QiscusChatVC]()
-        Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
-        Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
+//        Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
+//        Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
     }
     @objc public class func unRegisterPN(){
         if Qiscus.isLoggedIn {
@@ -214,6 +227,7 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
         if delegate != nil {
             Qiscus.shared.delegate = delegate
         }
+        Qiscus.setupReachability()
         QChatService.sync()
     }
     @objc public class func setBaseURL(withURL url:String){
@@ -630,17 +644,17 @@ var QiscusDBThread = DispatchQueue(label: "com.qiscus.db", attributes: .concurre
     
     // MARK: - local DB
     class func checkDatabaseMigration(force:Bool = false){
-        if Qiscus.dbConfiguration.fileURL?.lastPathComponent != "Qiscus.realm" {
-            Qiscus.dbConfiguration = Realm.Configuration.defaultConfiguration
-            var realmURL = Qiscus.dbConfiguration.fileURL!
-            realmURL.deleteLastPathComponent()
-            realmURL.appendPathComponent("Qiscus.realm")
-            Qiscus.dbConfiguration.fileURL = realmURL
-            Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
-        }
-        Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
-        
-        let _ = try! Realm(configuration: Qiscus.dbConfiguration)
+//        if Qiscus.dbConfiguration.fileURL?.lastPathComponent != "Qiscus.realm" {
+//            Qiscus.dbConfiguration = Realm.Configuration.defaultConfiguration
+//            var realmURL = Qiscus.dbConfiguration.fileURL!
+//            realmURL.deleteLastPathComponent()
+//            realmURL.appendPathComponent("Qiscus.realm")
+//            Qiscus.dbConfiguration.fileURL = realmURL
+//            Qiscus.dbConfiguration.deleteRealmIfMigrationNeeded = true
+//        }
+//        Qiscus.dbConfiguration.schemaVersion = Qiscus.shared.config.dbSchemaVersion
+//
+//        let _ = try! Realm(configuration: Qiscus.dbConfiguration)
         //Qiscus.printLog(text:"realmURL \(Qiscus.dbConfiguration.fileURL!)")
     }
     
