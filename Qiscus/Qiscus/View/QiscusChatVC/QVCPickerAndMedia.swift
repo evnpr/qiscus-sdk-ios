@@ -243,7 +243,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
 }
 
 // MARK: - UIDocumentPickerDelegate
-extension QiscusChatVC: UIDocumentPickerDelegate{
+extension QiscusChatVC: UIDocumentPickerDelegate,UIDocumentMenuDelegate{
     open func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         self.showLoading("Processing File")
         let coordinator = NSFileCoordinator()

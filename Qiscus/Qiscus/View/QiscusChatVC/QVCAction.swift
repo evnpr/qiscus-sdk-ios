@@ -101,15 +101,20 @@ extension QiscusChatVC {
         var Gallery : String = ""
         var Camera : String = ""
         var Cancel  : String = ""
+        var Document : String = ""
         if(preferredLanguage.range(of:"id") != nil){
-            Gallery = "Galeri"
+            Gallery = "Foto & Video"
             Camera  = "Kamera"
             Cancel  = "Batal"
+            Document = "Dokumen"
         }else{
-            Gallery = "Gallery"
+            Gallery = "Photo & Video Library"
             Camera  = "Camera"
             Cancel  = "Cancel"
+            Document = "Document"
         }
+        
+        var textColor = UIColor(red: 68/255.0, green: 68/255.0, blue: 68/255.0, alpha: 1)
         
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -122,6 +127,9 @@ extension QiscusChatVC {
             let cameraActionButton = UIAlertAction(title: Camera, style: .default) { action -> Void in
                 self.uploadFromCamera()
             }
+            let image = Qiscus.image(named: "hd_camera")!.withRenderingMode(.alwaysTemplate)
+            cameraActionButton.setValue(image, forKey: "image")
+            cameraActionButton.setValue(textColor, forKey: "titleTextColor")
             actionSheetController.addAction(cameraActionButton)
         }
         
@@ -129,13 +137,20 @@ extension QiscusChatVC {
             let galeryActionButton = UIAlertAction(title: Gallery, style: .default) { action -> Void in
                 self.uploadImage()
             }
+            let image = Qiscus.image(named: "hd_gallery")!.withRenderingMode(.alwaysTemplate)
+            galeryActionButton.setValue(image, forKey: "image")
+            galeryActionButton.setValue(textColor, forKey: "titleTextColor")
             actionSheetController.addAction(galeryActionButton)
         }
         
         if Qiscus.sharedInstance.iCloudUpload {
-            let iCloudActionButton = UIAlertAction(title: "iCloud", style: .default) { action -> Void in
-                self.iCloudOpen()
+            let iCloudActionButton = UIAlertAction(title: Document, style: .default) { action -> Void in
+                self.browser()
+               // self.iCloudOpen()
             }
+            let image = Qiscus.image(named: "hd_file_attachment")!.withRenderingMode(.alwaysTemplate)
+            iCloudActionButton.setValue(image, forKey: "image")
+            iCloudActionButton.setValue(textColor, forKey: "titleTextColor")
             actionSheetController.addAction(iCloudActionButton)
         }
         
@@ -153,6 +168,39 @@ extension QiscusChatVC {
         }
         self.present(actionSheetController, animated: true, completion: nil)
     }
+
+    func browser(){
+        let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypePDF)], in: .import)
+        importMenu.delegate = self
+        importMenu.modalPresentationStyle = .formSheet
+        self.present(importMenu, animated: true, completion: nil)
+    }
+    
+//    @available(iOS 8.0, *)
+//    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+//
+//
+//        let cico = url as URL
+//        print("The Url is : /(cico)")
+//        //optional, case PDF -> render
+//        //displayPDFweb.loadRequest(NSURLRequest(url: cico) as URLRequest)
+//
+//    }
+    
+    @available(iOS 8.0, *)
+    public func documentMenu(_ documentMenu:     UIDocumentMenuViewController, didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+        documentPicker.delegate = self
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    
+    
+    public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("we cancelled")
+        dismiss(animated: true, completion: nil)
+    }
+
+
     func shareCurrentLocation(){
         
         self.locationManager.requestWhenInUseAuthorization()
