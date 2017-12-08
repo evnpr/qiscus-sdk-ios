@@ -320,7 +320,7 @@ open class QiscusChatVC: UIViewController{
         linkPreviewContainer.layer.shadowColor = UIColor.black.cgColor
         linkPreviewContainer.layer.shadowOpacity = 0.6
         linkPreviewContainer.layer.shadowOffset = CGSize(width: -5, height: 0)
-        linkCancelButton.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonColor
+        linkCancelButton.tintColor = UIColor.red//QiscusColorConfiguration.sharedInstance.rightBaloonColor
         linkCancelButton.setImage(Qiscus.image(named: "ar_cancel")?.withRenderingMode(.alwaysTemplate), for: .normal)
         roomAvatar.contentMode = .scaleAspectFill
         inputText.font = Qiscus.style.chatFont
@@ -888,6 +888,7 @@ extension QiscusChatVC:QChatServiceDelegate{
     public func chatService(didFinishLoadRoom inRoom: QRoom, withMessage message: String?) {
         Qiscus.printLog(text: "finish load room \(inRoom.name)")
         self.chatRoom = inRoom
+        inRoom.isOpened = true
         self.chatRoom?.delegate = self
         self.loadRoomView()
         Qiscus.shared.chatViews[inRoom.id] = self

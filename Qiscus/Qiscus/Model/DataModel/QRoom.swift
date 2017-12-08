@@ -50,6 +50,7 @@ public class QRoom:Object {
     @objc public dynamic var typingUser:String = ""
     @objc public dynamic var lastReadCommentId: Int = 0
     @objc public dynamic var isLocked:Bool = false
+    @objc public dynamic var isOpened:Bool = false
     
     @objc internal dynamic var unreadCommentCount:Int = 0
     @objc public dynamic var unreadCount:Int = 0
