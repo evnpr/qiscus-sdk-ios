@@ -57,7 +57,7 @@ class QCellFileRight: QChatCell {
         dateLabel.text = self.comment!.time.lowercased()
         
         balloonView.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonColor
-        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         fileIcon.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonColor
         updateStatus(toStatus: self.comment!.status)
         if self.comment!.isUploading {
@@ -82,7 +82,7 @@ class QCellFileRight: QChatCell {
     
     public override func updateStatus(toStatus status:QCommentStatus){
         dateLabel.text = self.comment!.time.lowercased()
-        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         statusImage.isHidden = false
         statusImage.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
         statusImage.isHidden = false

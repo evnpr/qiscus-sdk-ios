@@ -62,7 +62,7 @@ class QCellFileLeft: QChatCell {
         dateLabel.text = self.comment!.time.lowercased()
         
         balloonView.tintColor = QiscusColorConfiguration.sharedInstance.leftBaloonColor
-        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.leftBaloonTextColor
+        dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         fileIcon.tintColor = QiscusColorConfiguration.sharedInstance.leftBaloonColor
     }
     public override func updateUserName() {

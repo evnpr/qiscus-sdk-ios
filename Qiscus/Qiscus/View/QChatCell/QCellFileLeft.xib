@@ -39,7 +39,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ol0-Nk-Dfg">
-                                <rect key="frame" x="19" y="4" width="192" height="36"/>
+                                <rect key="frame" x="8" y="4" width="203" height="36"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_file" translatesAutoresizingMaskIntoConstraints="NO" id="DaJ-8u-p7t">
                                         <rect key="frame" x="8" y="8" width="20" height="20"/>
@@ -63,22 +63,11 @@
                                     <constraint firstItem="DaJ-8u-p7t" firstAttribute="top" secondItem="ol0-Nk-Dfg" secondAttribute="top" constant="8" id="Bji-cw-y0W"/>
                                     <constraint firstItem="RhE-pp-aTu" firstAttribute="top" secondItem="DaJ-8u-p7t" secondAttribute="top" id="Ooh-OR-8hk"/>
                                     <constraint firstItem="RhE-pp-aTu" firstAttribute="leading" secondItem="DaJ-8u-p7t" secondAttribute="trailing" constant="4" id="QvG-3y-mTt"/>
-                                    <constraint firstAttribute="width" constant="192" id="Uxg-90-Bgu"/>
+                                    <constraint firstAttribute="width" constant="203" id="Uxg-90-Bgu"/>
                                     <constraint firstItem="DaJ-8u-p7t" firstAttribute="leading" secondItem="ol0-Nk-Dfg" secondAttribute="leading" constant="8" id="VGK-Dm-WEr"/>
-                                    <constraint firstAttribute="trailing" secondItem="RhE-pp-aTu" secondAttribute="trailing" constant="4" id="YOc-FG-hYy"/>
+                                    <constraint firstAttribute="trailing" secondItem="RhE-pp-aTu" secondAttribute="trailing" constant="15" id="YOc-FG-hYy"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDF File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6o-yi-Nha">
-                                <rect key="frame" x="23" y="40" width="100" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="dtt-9H-jqH"/>
-                                    <constraint firstAttribute="width" constant="100" id="fhX-Nl-tot"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="zvc-vU-SdD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending Failed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bqw-TZ-8x1">
                                 <rect key="frame" x="112" y="40" width="95" height="21"/>
                                 <constraints>
@@ -89,13 +78,24 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDF File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6o-yi-Nha">
+                                <rect key="frame" x="8" y="40" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="dtt-9H-jqH"/>
+                                    <constraint firstAttribute="width" constant="100" id="fhX-Nl-tot"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="zvc-vU-SdD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.44705882352941173" green="0.44705882352941173" blue="0.44705882352941173" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ir0-Fi-naf" firstAttribute="leading" secondItem="vz5-aS-SGD" secondAttribute="leading" constant="60" id="30z-ZP-day"/>
                             <constraint firstAttribute="height" secondItem="2SQ-Oz-3ET" secondAttribute="height" id="9FT-8o-OeH"/>
                             <constraint firstItem="ol0-Nk-Dfg" firstAttribute="bottom" secondItem="2SQ-Oz-3ET" secondAttribute="bottom" constant="-23" id="9UC-6V-Rs7"/>
-                            <constraint firstItem="V6o-yi-Nha" firstAttribute="leading" secondItem="ol0-Nk-Dfg" secondAttribute="leading" constant="4" id="X5b-BP-Cjo"/>
+                            <constraint firstItem="V6o-yi-Nha" firstAttribute="leading" secondItem="ol0-Nk-Dfg" secondAttribute="leading" id="X5b-BP-Cjo"/>
                             <constraint firstItem="Bqw-TZ-8x1" firstAttribute="bottom" secondItem="2SQ-Oz-3ET" secondAttribute="bottom" constant="-2" id="Zwa-vQ-3mG"/>
                             <constraint firstItem="Bqw-TZ-8x1" firstAttribute="trailing" secondItem="ol0-Nk-Dfg" secondAttribute="trailing" constant="-4" id="d3Z-wP-cjK"/>
                             <constraint firstItem="2SQ-Oz-3ET" firstAttribute="top" secondItem="vz5-aS-SGD" secondAttribute="top" id="eBd-xF-8XP"/>
