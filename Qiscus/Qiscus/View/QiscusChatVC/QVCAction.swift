@@ -130,6 +130,22 @@ extension QiscusChatVC {
             let image = Qiscus.image(named: "hd_camera")!.withRenderingMode(.alwaysTemplate)
             cameraActionButton.setValue(image, forKey: "image")
             cameraActionButton.setValue(textColor, forKey: "titleTextColor")
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = NSTextAlignment.left
+
+            let messageText = NSMutableAttributedString(
+                string: Camera,
+                attributes: [
+                    NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                    NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: UIFontTextStyle.body),
+                    NSAttributedStringKey.foregroundColor : textColor
+                ]
+            )
+
+//           cameraActionButton.setValue(messageText, forKey: "attributedTitle")
+            
+            
             actionSheetController.addAction(cameraActionButton)
         }
         
@@ -166,10 +182,12 @@ extension QiscusChatVC {
             }
             actionSheetController.addAction(contactActionButton)
         }
+        
         self.present(actionSheetController, animated: true, completion: nil)
     }
-
+    
     func browser(){
+         UINavigationBar.appearance().tintColor = UIColor.blue
         let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypePDF)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet

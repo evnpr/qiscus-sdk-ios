@@ -62,6 +62,7 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
         var cancel      : String = "Cancel"
         let sizeImage   : Double = Qiscus.maxUploadImageSize/1024.0
         let sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024.0
+        let sizeFile    : Double = Qiscus.maxUploadSizeInKB/1024.0
         
         if type == .image {
             if(preferredLanguage.range(of:"id") != nil){
@@ -81,6 +82,16 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
             }else{
                 errorTitle = "Fail to upload."
                 errorBody  = "File size too large. \nMax video size \(sizeVideo) Mb"
+                cancel     = "Cancel"
+            }
+        }else{
+            if(preferredLanguage.range(of:"id") != nil){
+                errorTitle = "Gagal menggugah."
+                errorBody  = "Size file terlalu besar. \nMax video size \(sizeFile) Mb"
+                cancel     = "Batal"
+            }else{
+                errorTitle = "Fail to upload."
+                errorBody  = "File size too large. \nMax video size \(sizeFile) Mb"
                 cancel     = "Cancel"
             }
         }
