@@ -26,7 +26,7 @@ class QCellFileRight: QChatCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         fileContainer.layer.cornerRadius = 10
-        fileIcon.image = Qiscus.image(named: "ic_file")?.withRenderingMode(.alwaysTemplate)
+        fileIcon.image = Qiscus.image(named: "ic_file")
         fileIcon.contentMode = .scaleAspectFit
     }
     public override func commentChanged() {
