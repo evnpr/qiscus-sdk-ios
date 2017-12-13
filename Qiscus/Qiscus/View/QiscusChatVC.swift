@@ -485,7 +485,7 @@ open class QiscusChatVC: UIViewController{
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         view.endEditing(true)
-        
+        UINavigationBar.appearance().tintColor = UIColor.white
         self.dismissLoading()
     }
     override open func viewDidDisappear(_ animated: Bool) {
@@ -870,7 +870,7 @@ open class QiscusChatVC: UIViewController{
             }
             break
         case .audio             : retHeight = 83 ; break
-        case .file              : retHeight = 67  ; break
+        case .file              : retHeight = 200  ; break
         case .reply             : retHeight += 88 ; break
         case .system            : retHeight += 46 ; break
         case .text              : retHeight += 15 ; break
