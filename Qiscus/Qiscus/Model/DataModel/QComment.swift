@@ -125,6 +125,8 @@ public class QComment:Object {
     @objc internal dynamic var rawExtra:String = ""
     // MARK : - Ignored Parameters
     var displayImage:UIImage?
+    var displayFileSize:String?
+    var displayFilePage:String?
     public var delegate:QCommentDelegate?
     
     // audio variable

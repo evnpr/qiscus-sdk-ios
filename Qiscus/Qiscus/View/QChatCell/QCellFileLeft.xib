@@ -146,6 +146,7 @@
                 <outlet property="leftMargin" destination="i45-7X-DiY" id="Y3n-4x-gsr"/>
                 <outlet property="topMargin" destination="eBd-xF-8XP" id="K7g-6c-QhO"/>
                 <outlet property="userNameLabel" destination="Ir0-Fi-naf" id="e8n-yg-7Tg"/>
+                <outlet property="viewNameFile" destination="jbe-vQ-Ov8" id="wPf-Ld-tPg"/>
             </connections>
             <point key="canvasLocation" x="57.5" y="77"/>
         </collectionViewCell>

@@ -1437,6 +1437,7 @@ public class QChatService:NSObject {
                                             let lastCommentData = roomData["last_comment"]
                                             let lastComment = QComment.tempComment(fromJSON: lastCommentData)
                                             room.updateLastComentInfo(comment: lastComment)
+                                            room.updateUnreadCommentCount(count: unread)
                                             rooms.append(room)
                                         }else{
                                             let room = QRoom.addRoom(fromJSON: roomData)

@@ -23,10 +23,14 @@ class QCellFileRight: QChatCell {
     @IBOutlet weak var rightMargin: NSLayoutConstraint!
     @IBOutlet weak var topMargin: NSLayoutConstraint!
     
+    @IBOutlet weak var viewFileName: UIView!
     @IBOutlet weak var imagePreview: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         fileContainer.layer.cornerRadius = 10
+        imagePreview.layer.cornerRadius = 4
+        viewFileName.roundCorners([.bottomLeft, .bottomRight], radius: 4)
+        imagePreview.clipsToBounds = true
         fileIcon.image = Qiscus.image(named: "ic_file")
         fileIcon.contentMode = .scaleAspectFit
     }
@@ -108,6 +112,8 @@ class QCellFileRight: QChatCell {
                         let stringSize = bcf.string(for: byteCount)
                         
                         fileTypeLabel.text = stringSize! + " \u{2022} \(pdfDoc.numberOfPages) \(page)"
+                        self.comment!.displayFilePage = String(pdfDoc.numberOfPages)
+                        self.comment!.displayFileSize = stringSize!
 
                     }
                     catch {
@@ -143,35 +149,16 @@ class QCellFileRight: QChatCell {
                         let stringSize = bcf.string(for: byteCount)
                         
                         fileTypeLabel.text = stringSize! + " \u{2022} \(pdfDoc.numberOfPages) \(page)"
+                        self.comment!.displayFilePage = String(pdfDoc.numberOfPages)
+                        self.comment!.displayFileSize = stringSize!
                     } catch {
                         print("Error: \(error)")
                     }
                     
                     
                 }else{
-                    var fileSize : Double
-                    
-                    do {
-                        let openURL = URL(string:  fileUrl)
-                        let pdfdata = NSData(contentsOf: openURL!)
-                        
-                        let pdfData = pdfdata as! CFData
-                        let provider:CGDataProvider = CGDataProvider(data: pdfData)!
-                        let pdfDoc:CGPDFDocument = CGPDFDocument(provider)!
-                        
-                        let byteCount = pdfdata?.length
-                        let bcf = ByteCountFormatter()
-                        bcf.allowedUnits = [.useMB]
-                        bcf.countStyle = .file
-                        let stringSize = bcf.string(for: byteCount)
-                        
-                        fileTypeLabel.text = stringSize! + " \u{2022} \(pdfDoc.numberOfPages) \(page)"
-                    } catch {
-                        print("Error: \(error)")
-                    }
-                    
                     self.imagePreview.image = self.comment!.displayImage
-                    
+                    self.fileTypeLabel.text = self.comment!.displayFileSize! + " \u{2022} \(self.comment!.displayFilePage!) \(page)"
                 }
                 
                 
@@ -251,3 +238,12 @@ class QCellFileRight: QChatCell {
         self.balloonView.image = self.getBallon()
     }
 }
+extension UIView {
+    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+}
+

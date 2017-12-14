@@ -159,6 +159,7 @@
                 <outlet property="statusImage" destination="vpH-3a-Uoa" id="mSf-YJ-u59"/>
                 <outlet property="topMargin" destination="XGl-IJ-Am9" id="ljk-dE-1Wb"/>
                 <outlet property="userNameLabel" destination="ilx-6x-Rwn" id="EUI-3r-7Kv"/>
+                <outlet property="viewFileName" destination="GCM-TP-YhF" id="f7l-TN-1BR"/>
             </connections>
             <point key="canvasLocation" x="69" y="125"/>
         </collectionViewCell>
