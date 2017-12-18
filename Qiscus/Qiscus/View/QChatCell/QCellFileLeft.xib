@@ -65,10 +65,10 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ubu-yG-CYT">
                                         <rect key="frame" x="0.0" y="0.0" width="203" height="150"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jbe-vQ-Ov8">
+                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jbe-vQ-Ov8">
                                         <rect key="frame" x="0.0" y="110" width="203" height="40"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_file" translatesAutoresizingMaskIntoConstraints="NO" id="DaJ-8u-p7t">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hd_pdf" translatesAutoresizingMaskIntoConstraints="NO" id="DaJ-8u-p7t">
                                                 <rect key="frame" x="8" y="10" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="YxX-8A-1om"/>
@@ -78,11 +78,11 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rancaranganAnggaranBelanja oke oke saja iya kan mas bro" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhE-pp-aTu">
                                                 <rect key="frame" x="36" y="5" width="159" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="DaJ-8u-p7t" secondAttribute="bottom" constant="10" id="5UO-i1-3n1"/>
                                             <constraint firstItem="RhE-pp-aTu" firstAttribute="leading" secondItem="DaJ-8u-p7t" secondAttribute="trailing" constant="8" id="Jjo-2z-Jkb"/>
@@ -95,7 +95,6 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ubu-yG-CYT" firstAttribute="leading" secondItem="ol0-Nk-Dfg" secondAttribute="leading" id="GtQ-iX-TuY"/>
                                     <constraint firstAttribute="bottom" secondItem="jbe-vQ-Ov8" secondAttribute="bottom" id="I0e-Fd-Lbm"/>
@@ -152,6 +151,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="ic_file" width="19" height="22"/>
+        <image name="hd_pdf" width="23" height="26"/>
     </resources>
 </document>
