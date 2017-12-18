@@ -127,25 +127,8 @@ extension QiscusChatVC {
             let cameraActionButton = UIAlertAction(title: Camera, style: .default) { action -> Void in
                 self.uploadFromCamera()
             }
-            let image = Qiscus.image(named: "hd_camera")!.withRenderingMode(.alwaysTemplate)
-            cameraActionButton.setValue(image, forKey: "image")
+            
             cameraActionButton.setValue(textColor, forKey: "titleTextColor")
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = NSTextAlignment.left
-
-            let messageText = NSMutableAttributedString(
-                string: Camera,
-                attributes: [
-                    NSAttributedStringKey.paragraphStyle: paragraphStyle,
-                    NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: UIFontTextStyle.body),
-                    NSAttributedStringKey.foregroundColor : textColor
-                ]
-            )
-
-//           cameraActionButton.setValue(messageText, forKey: "attributedTitle")
-            
-            
             actionSheetController.addAction(cameraActionButton)
         }
         
@@ -153,8 +136,7 @@ extension QiscusChatVC {
             let galeryActionButton = UIAlertAction(title: Gallery, style: .default) { action -> Void in
                 self.uploadImage()
             }
-            let image = Qiscus.image(named: "hd_gallery")!.withRenderingMode(.alwaysTemplate)
-            galeryActionButton.setValue(image, forKey: "image")
+            
             galeryActionButton.setValue(textColor, forKey: "titleTextColor")
             actionSheetController.addAction(galeryActionButton)
         }
@@ -164,8 +146,7 @@ extension QiscusChatVC {
                 self.browser()
                // self.iCloudOpen()
             }
-            let image = Qiscus.image(named: "hd_file_attachment")!.withRenderingMode(.alwaysTemplate)
-            iCloudActionButton.setValue(image, forKey: "image")
+            
             iCloudActionButton.setValue(textColor, forKey: "titleTextColor")
             actionSheetController.addAction(iCloudActionButton)
         }
