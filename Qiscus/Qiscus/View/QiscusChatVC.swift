@@ -36,7 +36,7 @@ open class QiscusChatVC: UIViewController{
     @IBOutlet public weak var collectionView: UICollectionView!
     @IBOutlet weak var bottomButton: UIButton!
     @IBOutlet weak var unreadIndicator: UILabel!
-    @IBOutlet weak var linkPreviewContainer: UIView!
+    @IBOutlet public weak var linkPreviewContainer: UIView!
     @IBOutlet weak var linkDescription: UITextView!
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var linkTitle: UILabel!
@@ -55,6 +55,7 @@ open class QiscusChatVC: UIViewController{
     @IBOutlet weak var linkImageWidth: NSLayoutConstraint!
     @IBOutlet public weak var collectionViewTopMargin: NSLayoutConstraint!
     
+    public var featureReplay:Bool = true
     var isPresence:Bool = false
     public var titleLabel = UILabel()
     public var subtitleLabel = UILabel()
@@ -1026,12 +1027,17 @@ extension QiscusChatVC:QRoomDelegate{
     public func hideInputBar(){
         self.inputBarHeight.constant = 0
         self.minInputHeight.constant = 0
+        self.linkPreviewContainer.isHidden = true
+        self.linkPreviewTopMargin.constant = 0
+        self.featureReplay = false
     }
     
     public func hideInputBarAndShowRate(){
         self.inputBar.isHidden = true
         self.inputBarHeight.constant = 10
+        self.linkPreviewTopMargin.constant = 0
         self.linkPreviewContainer.isHidden = true
+        self.featureReplay = false
     }
     open func reply(toComment comment:QComment?){
         if comment == nil {

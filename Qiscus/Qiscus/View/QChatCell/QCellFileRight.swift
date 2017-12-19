@@ -109,7 +109,11 @@ class QCellFileRight: QChatCell {
                         let bcf = ByteCountFormatter()
                         bcf.allowedUnits = [.useMB]
                         bcf.countStyle = .file
-                        let stringSize = bcf.string(for: byteCount)
+                        let stringSize = bcf.string(for: byteCount)?.replacingOccurrences(of: ",", with: ".")
+                        
+                        if(pdfDoc.numberOfPages > 1){
+                            page = "pages"
+                        }
                         
                         fileTypeLabel.text = stringSize! + " \u{2022} \(pdfDoc.numberOfPages) \(page)"
                         self.comment!.displayFilePage = String(pdfDoc.numberOfPages)
@@ -146,7 +150,11 @@ class QCellFileRight: QChatCell {
                         let bcf = ByteCountFormatter()
                         bcf.allowedUnits = [.useMB]
                         bcf.countStyle = .file
-                        let stringSize = bcf.string(for: byteCount)
+                        let stringSize = bcf.string(for: byteCount)?.replacingOccurrences(of: ",", with: ".")
+                        
+                        if(pdfDoc.numberOfPages > 1){
+                            page = "pages"
+                        }
 
                         fileTypeLabel.text = stringSize! + " \u{2022} \(pdfDoc.numberOfPages) \(page)"
                         self.comment!.displayFilePage = String(pdfDoc.numberOfPages)
@@ -157,6 +165,11 @@ class QCellFileRight: QChatCell {
                     
                     
                 }else{
+                    
+                    if(self.comment!.displayFilePage! > "1"){
+                        page = "pages"
+                    }
+                    
                     self.imagePreview.image = self.comment!.displayImage
                     self.fileTypeLabel.text = self.comment!.displayFileSize! + " \u{2022} \(self.comment!.displayFilePage!) \(page)"
                 }
@@ -168,7 +181,7 @@ class QCellFileRight: QChatCell {
         
         dateLabel.text = self.comment!.time.lowercased()
         
-        balloonView.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonTextColor
+        balloonView.tintColor = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1)
         dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         fileIcon.tintColor = QiscusColorConfiguration.sharedInstance.rightBaloonColor
         updateStatus(toStatus: self.comment!.status)

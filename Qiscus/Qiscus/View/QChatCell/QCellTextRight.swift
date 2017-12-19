@@ -46,7 +46,7 @@ class QCellTextRight: QChatCell {
         LinkContainer.isHidden = true
         LinkContainer.layer.cornerRadius = 4
         LinkContainer.clipsToBounds = true
-        linkContainerWidth.constant = self.maxWidth + 2
+        linkContainerWidth.constant = 0.6 * QiscusHelper.screenWidth()
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(QCellTextRight.openLink))
         LinkContainer.addGestureRecognizer(tapRecognizer)
         linkImage.clipsToBounds = true
@@ -200,7 +200,7 @@ class QCellTextRight: QChatCell {
             self.balloonHeight.constant = 83
             self.textTopMargin.constant = 73
             self.linkHeight.constant = 65
-            textWidth = self.maxWidth
+            textWidth =  0.6 * QiscusHelper.screenWidth()
         }else{
             self.linkTitle.text = ""
             self.linkDescription.text = ""
