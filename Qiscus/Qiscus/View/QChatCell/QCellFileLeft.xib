@@ -82,7 +82,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.87058823529411766" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.80240384615384619" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="DaJ-8u-p7t" secondAttribute="bottom" constant="10" id="5UO-i1-3n1"/>
                                             <constraint firstItem="RhE-pp-aTu" firstAttribute="leading" secondItem="DaJ-8u-p7t" secondAttribute="trailing" constant="8" id="Jjo-2z-Jkb"/>

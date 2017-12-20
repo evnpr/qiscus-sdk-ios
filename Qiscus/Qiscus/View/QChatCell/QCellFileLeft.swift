@@ -184,7 +184,8 @@ class QCellFileLeft: QChatCell {
         }
         
         dateLabel.text = self.comment!.time.lowercased()
-        balloonView.tintColor = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1)
+        balloonView.tintColor = QiscusColorConfiguration.sharedInstance.leftBaloonColor
+        //balloonView.tintColor = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1)
         dateLabel.textColor = QiscusColorConfiguration.sharedInstance.timeLabelTextColor
         fileIcon.tintColor = QiscusColorConfiguration.sharedInstance.leftBaloonColor
     }
