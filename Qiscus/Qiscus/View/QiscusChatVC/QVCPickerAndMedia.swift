@@ -57,42 +57,42 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
     func showFileTooBigAlert(type: ErrorUploadType = .file){
         let preferredLanguage = NSLocale.preferredLanguages[0]
         
-        var errorTitle  : String = "Fail to upload."
-        var errorBody   : String = "File size too large."
-        var cancel      : String = "Cancel"
-        let sizeImage   : Double = Qiscus.maxUploadImageSize/1024.0
-        let sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024.0
-        let sizeFile    : Double = Qiscus.maxUploadSizeInKB/1024.0
+        var errorTitle  : String = "Failed to upload."
+        var errorBody   : String = "The size of your file is too big."
+        var cancel      : String = "Ok"
+        let sizeImage   : Double = Qiscus.maxUploadImageSize/1024
+        let sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024
+        let sizeFile    : Double = Qiscus.maxUploadSizeInKB/1024
         
         if type == .image {
             if(preferredLanguage.range(of:"id") != nil){
-                errorTitle = "Gagal menggugah."
-                errorBody  = "Size file terlalu besar. \nSize gambar maximum \(sizeImage) Mb"
-                cancel     = "Batal"
+                errorTitle = "Gagal mengunggah"
+                errorBody  = "Ukuran image terlalu besar. \nMaks. ukuran image \(sizeImage) Mb"
+                cancel     = "Ok"
             }else{
-                errorTitle = "Fail to upload."
-                errorBody  = "File size too large. \nMax image size \(sizeImage) Mb"
-                cancel     = "Cancel"
+                errorTitle = "Failed to upload"
+                errorBody  = "The size of your image is too big. \nMax image size \(sizeImage) Mb"
+                cancel     = "Ok"
             }
         }else if type == .video {
             if(preferredLanguage.range(of:"id") != nil){
-                errorTitle = "Gagal menggugah."
-                errorBody  = "Size file terlalu besar. \nMax video size \(sizeVideo) Mb"
-                cancel     = "Batal"
+                errorTitle = "Gagal mengunggah"
+                errorBody  = "Ukuran video terlalu besar. \nMaks. ukuran video \(sizeVideo) Mb"
+                cancel     = "Ok"
             }else{
-                errorTitle = "Fail to upload."
-                errorBody  = "File size too large. \nMax video size \(sizeVideo) Mb"
-                cancel     = "Cancel"
+                errorTitle = "Failed to upload"
+                errorBody  = "The size of your video is too big. \nMax video size \(sizeVideo) Mb"
+                cancel     = "Ok"
             }
         }else{
             if(preferredLanguage.range(of:"id") != nil){
-                errorTitle = "Gagal menggugah."
-                errorBody  = "Size file terlalu besar. \nMax video size \(sizeFile) Mb"
-                cancel     = "Batal"
+                errorTitle = "Gagal mengunggah"
+                errorBody  = "Ukuran file terlalu besar. \nMaks. ukuran file \(sizeFile) Mb"
+                cancel     = "Ok"
             }else{
-                errorTitle = "Fail to upload."
-                errorBody  = "File size too large. \nMax video size \(sizeFile) Mb"
-                cancel     = "Cancel"
+                errorTitle = "Failed to upload"
+                errorBody  = "The size of your file is too big. \nMax File size \(sizeFile) Mb"
+                cancel     = "Ok"
             }
         }
         
