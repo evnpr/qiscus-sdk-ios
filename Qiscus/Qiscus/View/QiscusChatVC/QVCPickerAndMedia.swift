@@ -264,12 +264,13 @@ extension QiscusChatVC: UIDocumentPickerDelegate,UIDocumentMenuDelegate{
                 print("data =\(Double(data.count))")
                 
                 let mediaSize = Double(data.count)
+                let dataSize = Double(data.count) / 1024.0
                 let bcf = ByteCountFormatter()
                 bcf.allowedUnits = [.useMB]
                 bcf.countStyle = .file
                 
                 
-                if(bcf.string(for: mediaSize)?.range(of: "20") != nil){
+                if(bcf.string(for: mediaSize)?.range(of: "20") != nil || dataSize > Qiscus.maxUploadSizeInKB){
                     self.processingFile = false
                     self.dismissLoading()
                     self.showFileTooBigAlert(type: .file)
