@@ -60,9 +60,9 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
         var errorTitle  : String = "Failed to upload."
         var errorBody   : String = "The size of your file is too big."
         var cancel      : String = "Ok"
-        let sizeImage   : Double = Qiscus.maxUploadImageSize/1024
-        let sizeVideo   : Double = Qiscus.maxUploadVideoSize/1024
-        let sizeFile    : Double = Qiscus.maxUploadSizeInKB/1024
+        let sizeImage   : Int = Int(Qiscus.maxUploadImageSize/1024)
+        let sizeVideo   : Int = Int(Qiscus.maxUploadVideoSize/1024)
+        let sizeFile    : Int = Int(Qiscus.maxUploadSizeInKB/1024)
         
         if type == .image {
             if(preferredLanguage.range(of:"id") != nil){
@@ -261,13 +261,22 @@ extension QiscusChatVC: UIDocumentPickerDelegate,UIDocumentMenuDelegate{
         coordinator.coordinate(readingItemAt: url, options: NSFileCoordinator.ReadingOptions.forUploading, error: nil) { (dataURL) in
             do{
                 var data:Data = try Data(contentsOf: dataURL, options: NSData.ReadingOptions.mappedIfSafe)
-                let mediaSize = Double(data.count) / 1024.0
-                if mediaSize > Qiscus.maxUploadSizeInKB {
+                print("data =\(Double(data.count))")
+                
+                let mediaSize = Double(data.count)
+                let dataSize = Double(data.count) / 1024.0
+                let bcf = ByteCountFormatter()
+                bcf.allowedUnits = [.useMB]
+                bcf.countStyle = .file
+                
+                
+                if(bcf.string(for: mediaSize)?.range(of: "20") != nil || dataSize > Qiscus.maxUploadSizeInKB){
                     self.processingFile = false
                     self.dismissLoading()
                     self.showFileTooBigAlert(type: .file)
                     return
                 }
+                
                 
                 var fileName = dataURL.lastPathComponent.replacingOccurrences(of: "%20", with: "_")
                 fileName = fileName.replacingOccurrences(of: " ", with: "_")

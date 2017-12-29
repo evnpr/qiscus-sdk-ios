@@ -114,6 +114,13 @@ class QCellFileLeft: QChatCell {
                         let bcf = ByteCountFormatter()
                         bcf.allowedUnits = [.useMB]
                         bcf.countStyle = .file
+                        
+                        if(bcf.string(for: byteCount)?.first == "0"){
+                            bcf.allowedUnits = [.useKB]
+                            print("true")
+                            
+                        }
+                        
                         let stringSize = bcf.string(for: byteCount)?.replacingOccurrences(of: ",", with: ".")
                         
                         if(pdfDoc.numberOfPages > 1){
@@ -155,6 +162,13 @@ class QCellFileLeft: QChatCell {
                         let bcf = ByteCountFormatter()
                         bcf.allowedUnits = [.useMB]
                         bcf.countStyle = .file
+                        
+                        if(bcf.string(for: byteCount)?.first == "0"){
+                            bcf.allowedUnits = [.useKB]
+                            print("true")
+                            
+                        }
+                        
                         let stringSize = bcf.string(for: byteCount)?.replacingOccurrences(of: ",", with: ".")
                         
                         if(pdfDoc.numberOfPages > 1){
