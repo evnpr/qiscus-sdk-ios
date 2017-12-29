@@ -79,27 +79,30 @@ class QCellFileRight: QChatCell {
                     do {
                         
                         let pdfdata = try NSData(contentsOfFile: filePath, options: NSData.ReadingOptions.init(rawValue: 0))
-                        
+
                         let pdfData = pdfdata as CFData
                         let provider:CGDataProvider = CGDataProvider(data: pdfData)!
                         let pdfDoc:CGPDFDocument = CGPDFDocument(provider)!
                         print("cek page =\(pdfDoc.numberOfPages)")
-                        let pdfPage:CGPDFPage = pdfDoc.page(at: 1)!
-                        var pageRect:CGRect = pdfPage.getBoxRect(.mediaBox)
-                        pageRect.size = CGSize(width:pageRect.size.width, height:pageRect.size.height)
-                        
-                        print("\(pageRect.width) by \(pageRect.height)")
-                        
-                        UIGraphicsBeginImageContext(pageRect.size)
-                        let context:CGContext = UIGraphicsGetCurrentContext()!
-                        context.saveGState()
-                        context.translateBy(x: 0.0, y: pageRect.size.height)
-                        context.scaleBy(x: 1.0, y: -1.0)
-                        context.concatenate(pdfPage.getDrawingTransform(.mediaBox, rect: pageRect, rotate: 0, preserveAspectRatio: true))
-                        context.drawPDFPage(pdfPage)
-                        context.restoreGState()
-                        let pdfImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-                        UIGraphicsEndImageContext()
+                        var pdfImage:UIImage = UIImage(named: "PDF_ICON", in: Qiscus.bundle, compatibleWith: nil)!
+                        if let pdfPage:CGPDFPage = pdfDoc.page(at: 1) {
+                            var pageRect:CGRect = pdfPage.getBoxRect(.mediaBox)
+                            pageRect.size = CGSize(width:pageRect.size.width, height:pageRect.size.height)
+                            
+                            print("\(pageRect.width) by \(pageRect.height)")
+                            
+                            UIGraphicsBeginImageContext(pageRect.size)
+                            let context:CGContext = UIGraphicsGetCurrentContext()!
+                            context.saveGState()
+                            context.translateBy(x: 0.0, y: pageRect.size.height)
+                            context.scaleBy(x: 1.0, y: -1.0)
+                            context.concatenate(pdfPage.getDrawingTransform(.mediaBox, rect: pageRect, rotate: 0, preserveAspectRatio: true))
+                            context.drawPDFPage(pdfPage)
+                            context.restoreGState()
+                            UIGraphicsEndImageContext()
+                            pdfImage = UIGraphicsGetImageFromCurrentImageContext()!
+                        }
+
                         
                         self.imagePreview.image = pdfImage
                         self.comment!.displayImage = pdfImage
