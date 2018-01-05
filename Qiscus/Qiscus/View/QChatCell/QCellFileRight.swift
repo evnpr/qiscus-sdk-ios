@@ -99,8 +99,8 @@ class QCellFileRight: QChatCell {
                             context.concatenate(pdfPage.getDrawingTransform(.mediaBox, rect: pageRect, rotate: 0, preserveAspectRatio: true))
                             context.drawPDFPage(pdfPage)
                             context.restoreGState()
-                            UIGraphicsEndImageContext()
                             pdfImage = UIGraphicsGetImageFromCurrentImageContext()!
+                            UIGraphicsEndImageContext()
                         }
 
                         
