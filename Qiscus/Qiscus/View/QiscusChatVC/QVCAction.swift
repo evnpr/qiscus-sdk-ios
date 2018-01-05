@@ -22,7 +22,6 @@ extension QiscusChatVC:CNContactPickerDelegate{
             self.collectionView.reloadData()
             self.postComment(comment: newComment)
             
-            self.chatRoom!.post(comment: newComment)
             let indexPath = IndexPath(item: item, section: section)
             self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
         }
