@@ -292,8 +292,16 @@ class QCellMediaRight: QChatCell {
                 self.videoPlay.isHidden = true
                 self.videoFrame.isHidden = true
             }
-            self.tapRecognizer = UITapGestureRecognizer(target:self,action:#selector(self.didTapImage))
-            self.imageDisplay.addGestureRecognizer(tapRecognizer!)
+            if !QFileManager.isFileExist(inLocalPath: file.localPath){
+                self.videoPlay.isHidden = true
+                self.downloadButton.comment = self.comment!
+                self.downloadButton.addTarget(self, action: #selector(QCellMediaRight.downloadMedia(_:)), for: .touchUpInside)
+                self.downloadButton.isHidden = false
+            }else{
+                self.tapRecognizer = UITapGestureRecognizer(target:self,action:#selector(self.didTapImage))
+                self.imageDisplay.addGestureRecognizer(tapRecognizer!)
+            }
+
         }
     }
     @objc func didTapImage(){
