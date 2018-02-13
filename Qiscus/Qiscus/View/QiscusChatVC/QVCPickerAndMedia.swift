@@ -154,6 +154,22 @@ extension QiscusChatVC:UIImagePickerControllerDelegate, UINavigationControllerDe
                                 data = gifData
                             }
                         }
+                    }else{
+                        imageName = "\(timeToken).jpg"
+                        let imageSize = image.size
+                        var bigPart = CGFloat(0)
+                        if(imageSize.width > imageSize.height){
+                            bigPart = imageSize.width
+                        }else{
+                            bigPart = imageSize.height
+                        }
+                        
+                        var compressVal = CGFloat(1)
+                        if(bigPart > 2000){
+                            compressVal = 2000 / bigPart
+                        }
+                        
+                        data = UIImageJPEGRepresentation(image, compressVal)!
                     }
                 }else{
                     imageName = "\(timeToken).jpg"
